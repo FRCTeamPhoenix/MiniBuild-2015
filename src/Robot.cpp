@@ -12,12 +12,23 @@ class Robot: public SampleRobot
    // only joystick
    Joystick stick;
 
+   //Drive Train Encoders
+   Encoder m_leftRearDriveEncoder;
+   Encoder m_leftFrontDriveEncoder;
+   Encoder m_rightFrontDriveEncoder;
+   Encoder m_rightRearDriveEncoder;
+
 public:
    Robot() :
       // these must be initialized in the same order
       driveTrain(),
       // as they are declared above.
-      stick(Port::joystickChannel)
+      stick(Port::joystickChannel),
+      m_leftRearDriveEncoder(PortAssign::LeftRearDriveEncoderChannelA, PortAssign::LeftRearDriveEncoderChannelB),
+      m_leftFrontDriveEncoder(PortAssign::LeftFrontDriveEncoderChannelA, PortAssign::LeftFrontDriveEncoderChannelB),
+      m_rightFrontDriveEncoder(PortAssign::RightFrontDriveEncoderChannelA, PortAssign::RightFrontDriveEncoderChannelB),
+      m_rightRearDriveEncoder(PortAssign::RightRearDriveEncoderChannelA, PortAssign::RightRearDriveEncoderChannelB)
+
    {
       driveTrain.SetExpiration(0.1);
       // invert the left side motors
