@@ -1,0 +1,20 @@
+////////////////////////////////////////////////
+// Team Nulleam Goals and Dreams (for vision) //
+////////////////////////////////////////////////
+
+Basic Goal: Track Target
+
+Required Tasks:
+-Know if target is in view
+-Know distance
+-Know direction of motion
+-Know speed of the target
+
+TODO list (for code):
+1) Based on data, construct a virtual box to represent target (including tilt)
+2) Using stored data, calculate speed and direction (difference in calculated box position)
+3) Determine relative rotation of robot and camera
+    3a) Use Gyro on Robot
+    3b) Use Encoder on Camera Mount
+4) Using stored data, find the distance and rotation of the target (this will tie in strongly
+   with the relative rotations)
