@@ -1,13 +1,15 @@
-#ifndef SRC_DRIVETRAIN_H_
-#define SRC_DRIVETRAIN_H_
-#include "RobotDrive.h"
+#ifndef SRC_AUTONOMOUS_H_
+#define SRC_AUTONOMOUS_H_
+#include "DriveTrain.h"
 #include "Joystick.h"
+
+
 
 class Autonomous{
 
 public:
 
-    Autonomous(Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight);
+    Autonomous(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight);
 
     void autoMove(float speed, int desiredx, int desiredy, int moveAngle);
 
@@ -17,25 +19,31 @@ public:
 
     void automode1();
 
-    void distanceCalculate(float FRencoderTicks, float FLencoderTicks, float BRencoderTicks, float BLencoderTicks);
+    void distanceCalculate(int moveAngle);
 
     enum WheelPosition {
         RF,
         LF,
-        RR,
-        LR
-    }
-    float FLencoderTicks;
-    float FRencoderTicks;
-    float BRencoderTicks;
-    float BLencoderTicks;
-    float position_x;
-    float position_y;
-    bool atPosition;
-    Encoder * m_frontLeft;
-    Encoder * m_frontRight;
-    Encoder * m_backLeft;
-    Encoder * m_backRight;
+        LR,
+        RR
+    };
+    DriveTrain * m_driveTrain;
+    Encoder * RFEncoder;
+    Encoder * LFEncoder;
+    Encoder * RREncoder;
+    Encoder * LREncoder;
+    Encoder * wheelEncoders[4];
+
+    int encoderTicks[4];
+    int oldEncoderTicks[4];
+
+    float m_position_x;
+    float m_position_y;
+    float m_position_xRotate;
+    float m_position_yRotate;
+    float m_position;
+    bool m_atPosition;
+
 
 
     virtual ~Autonomous(){};
@@ -47,4 +55,4 @@ public:
 
 
 
-#endif /* SRC_DRIVETRAIN_H_ */
+#endif /* SRC_AUTONOMOUS_H_ */

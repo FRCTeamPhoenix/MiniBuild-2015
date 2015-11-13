@@ -5,62 +5,88 @@
 #include "math.h"
 
 //the number of ticks in one inch
-static const float ticksPerInch=7.6433;
+static const float ticksPerInch=40.76;
+//radians to degrees 180/pi
 static const float radToDegree = 57.3248;
+//move speed for auto, TODO tune this
 static const float autoMoveSpeed =1;
-Autonomous::Autonomous(Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight){
 
-    position_x =0;
-    position_y=0;
+Autonomous::Autonomous(DriveTrain * driveTrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight):
 
-    m_frontLeft = frontLeft;
-    m_frontRight = frontRight;
-    m_backLeft = backLeft;
-    m_backRight = backRight;
+        m_driveTrain(driveTrain),
+        RFEncoder(frontRight),
+        LFEncoder(frontLeft),
+        LREncoder(backLeft),
+        RREncoder(backRight),
+        wheelEncoders(RFEncoder, LFEncoder, LREncoder, RREncoder),
+        encoderTicks(0,0,0,0),
+        oldEncoderTicks(0,0,0,0),
 
-    atPosition = false;
+        m_position_x(0.0f),
+        m_position_y(0.0f),
+        m_position_xRotate(0.0f),
+        m_position_yRotate(0.0f),
+        m_position(0.0f),
+        m_atPosition(false)
+
+{
+
+
+
+
 }
 
 void Autonomous::autoMove(float speed,int desiredx, int desiredy, int moveAngle){
     updateEncoder();
-    distanceCalculate();
-    if ((position_x < desiredx+1)
-        && (position_x > desiredx-1)
-        && (position_y < desiredy+1)
-        && (position_y > desiredy-1)){
-        atPosition=true;
+    distanceCalculate(moveAngle);
+    if ((m_position_x < desiredx+1)
+        && (m_position_x > desiredx-1)
+        && (m_position_y < desiredy+1)
+        && (m_position_y > desiredy-1)){
+        m_atPosition=true;
     }
     else {
-        moveAngle = atan2(desiredy-position_y, desiredx-position_x)*radToDegree;
+        moveAngle = atan2(desiredy-m_position_y, desiredx-m_position_x)*radToDegree;
 
-        if (!atPosition){
-            MecanumDrive_Polar(speed, moveAngle);
+        if (!m_atPosition){
+            m_driveTrain->MecanumDrive_Polar(speed,moveAngle,0);
         }
     }
 }
 
 void Autonomous::updateEncoder(){
+    for (int i = RF; i <= RR; i++){
+            encoderTicks[i]=wheelEncoders[i]->Get()-oldEncoderTicks[i];
+        }
 
-    FRencoderTicks=m_frontRight->Get();
-    FLencoderTicks=m_frontLeft->Get();
-    BRencoderTicks=m_backRight->Get();
-    BLencoderTicks=m_backLeft->Get();
+
+
 }
 
 
 void Autonomous::resetEncoder(){
-    FRencoderTicks=0;
-    FLencoderTicks=0;
-    BRencoderTicks=0;
-    BLencoderTicks=0;
+    for (int i = RF; i <= RR; i++){
+           oldEncoderTicks[i]=encoderTicks[i];
+       }
 }
-void Autonomous::distanceCalculate(){
-    position_x = ((FRencoderTicks+BLencoderTicks)/2)/ticksPerInch;
-    position_y = ((FLencoderTicks+BRencoderTicks)/2)/ticksPerInch;
+void Autonomous::distanceCalculate(int moveAngle){
+    m_position_xRotate = ((encoderTicks[RF]+encoderTicks[LR])/2);
+    m_position_yRotate = ((encoderTicks[LF]+encoderTicks[RR])/2);
+    m_position = sqrt((m_position_yRotate* m_position_yRotate)+( m_position_xRotate* m_position_xRotate));
+    m_position_x = (m_position*(sin((moveAngle/radToDegree))))/ticksPerInch;
+    m_position_y = (m_position*(cos(moveAngle/radToDegree)))/ticksPerInch;
 
 
 }
 
 void Autonomous::automode1(){
     autoMove(autoMoveSpeed,0,48,0);
+    resetEncoder();
+    autoMove(autoMoveSpeed,48,0,90);
+    resetEncoder();
+    autoMove(autoMoveSpeed,0,96,0);
+    resetEncoder();
+    autoMove(autoMoveSpeed,12,0,90);
+    resetEncoder();
+    autoMove(autoMoveSpeed,0,96,180);
 }
