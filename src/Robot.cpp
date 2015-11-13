@@ -28,7 +28,7 @@ public:
 			camera()
 	{
 		camera = new AxisCamera("10.0.42.20");
-		frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+		frame = new ColorImage(IMAQ_IMAGE_RGB);
 		robotDrive.SetExpiration(0.1);
 		robotDrive.SetInvertedMotor(RobotDrive::kFrontLeftMotor, true);	// invert the left side motors
 		robotDrive.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);	// you may need to change or remove this to match your robot
