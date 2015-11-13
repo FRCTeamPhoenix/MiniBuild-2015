@@ -17,7 +17,7 @@ class Robot: public SampleRobot
 	RobotDrive robotDrive;	// robot drive system
 	Joystick stick;			// only joystick
 
-	Image *frame;
+	ColorImage *frame;
 	AxisCamera *camera;
 
 public:
@@ -48,9 +48,7 @@ public:
 
 			camera->GetImage(frame);
 
-			imaqDrawShapeOnImage(frame, frame, {10,10,100,100}, DrawMode::IMAQ_DRAW_VALUE, ShapeMode::IMAQ_SHAPE_OVAL, 0.0f);
-
-			CameraServer::GetInstance()->SetImage(frame);
+			CameraServer::GetInstance()->SetImage(frame->GetImaqImage());
 
 			Wait(0.005); // wait 5ms to avoid hogging CPU cycles
 		}
