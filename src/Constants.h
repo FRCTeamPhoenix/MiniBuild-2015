@@ -19,9 +19,17 @@ struct Port{
 };
 
 enum buttonNames {
-	buttonX = 1, buttonA = 2, buttonB = 3, buttonY = 4,
-	buttonLB = 5, buttonRB = 6, triggerLT = 7, triggerRT = 8,
-	buttonBack = 9, buttonStart = 10, joystickLeftButton = 11,
+	buttonX = 1,
+	buttonA = 2,
+	buttonB = 3,
+	buttonY = 4,
+	buttonLB = 5,
+	buttonRB = 6,
+	triggerLT = 7,
+	triggerRT = 8,
+	buttonBack = 9,
+	buttonStart = 10,
+	joystickLeftButton = 11,
 	joystickRightButton = 12
 };
 
