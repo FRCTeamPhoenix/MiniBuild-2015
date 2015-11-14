@@ -6,7 +6,7 @@
 
 
 
-AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight):
+AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro):
 
         m_position_x(0.0f),
         m_position_y(0.0f),
@@ -19,7 +19,10 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
         LFEncoder(frontLeft),
         LREncoder(backLeft),
         RREncoder(backRight),
-        adjustedMoveAngle(0)
+        m_gyro(gyro),
+        ajustedMoveAngle(0),
+        rotateAdjust(0)
+
 
 
 
@@ -28,6 +31,8 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
        LFEncoder->Reset();
        LREncoder->Reset();
        RREncoder->Reset();
+       m_gyro->InitGyro();
+       m_gyro->Reset();
 
        wheelEncoders[0]=RFEncoder;
        wheelEncoders[1]=LFEncoder;
@@ -53,22 +58,23 @@ void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desi
     m_atPosition=false;
     while (!m_atPosition){
 
-    updateEncoder();
-    distanceCalculate(desiredMoveAngle);
-
-    if ((m_position_x < desiredx+1)
-        && (m_position_x > desiredx-1)
-        && (m_position_y < desiredy+1)
-        && (m_position_y > desiredy-1)){
-        m_atPosition=true;
-    }
-
-    adjustedMoveAngle = desiredMoveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*AutoConstants::radToDegree;
+       updateEncoder();
+       distanceCalculate(desiredMoveAngle);
 
 
-    m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle,0);
+       if ((m_position_x < desiredx+1)
+           && (m_position_x > desiredx-1)
+           && (m_position_y < desiredy+1)
+           && (m_position_y > desiredy-1)){
+           m_atPosition=true;
+       }
 
-    Wait(.05);
+       ajustedMoveAngle = desiredMoveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*AutoConstants::radToDegree;
+       rotateAdjust=-(((m_gyro->GetAngle())%360)/360);
+
+       m_driveTrain->MecanumDrive_Polar(speed,desiredMoveAngle,rotateAdjust);
+
+       Wait(.05);
 
 
     }
@@ -78,6 +84,7 @@ void AutonomousClass::updateEncoder(){
     for (int i = RF; i <= RR; i++){
             encoderTicks[i]=wheelEncoders[i]->Get()-oldEncoderTicks[i];
         }
+
 
 
 
@@ -120,5 +127,6 @@ void AutonomousClass::automode3(){
 }
 //drive up and to the left at 45 degrees
 void AutonomousClass::automode4(){
+
     autoMove(AutoConstants::autoMoveSpeed,-24,24,45);
 }

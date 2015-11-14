@@ -27,7 +27,8 @@ struct Port{
    static const uint32_t RightFrontDriveEncoderChannelB = 5;
    static const uint32_t RightRearDriveEncoderChannelA = 6;
    static const uint32_t RightRearDriveEncoderChannelB = 7;
-
+   //gyro port
+   static const int32_t gyroChannel = 0;
 
 
 
