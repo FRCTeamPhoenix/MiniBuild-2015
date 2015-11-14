@@ -1,17 +1,17 @@
-#ifndef SRC_AUTONOMOUS_H_
-#define SRC_AUTONOMOUS_H_
+#ifndef SRC_AutonomousClass_H_
+#define SRC_AutonomousClass_H_
 #include "DriveTrain.h"
 #include "Joystick.h"
 
 
 
-class Autonomous{
+class AutonomousClass{
 
 public:
 
-    Autonomous(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight);
+    AutonomousClass(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight);
 
-    void autoMove(double speed, int desiredx, int desiredy, int moveAngle);
+    void autoMove(double speed, int desiredx, int desiredy, int desiredMoveAngle);
 
     void updateEncoder();
 
@@ -19,7 +19,7 @@ public:
 
     void automode1();
 
-    void distanceCalculate(int moveAngle);
+    void distanceCalculate(int desiredMoveAngle);
 
     void automode2();
 
@@ -50,12 +50,13 @@ public:
 
     int encoderTicks[4];
     int oldEncoderTicks[4];
+    int ajustedMoveAngle;
 
 
 
 
 
-    virtual ~Autonomous(){};
+    virtual ~AutonomousClass(){};
 
 
 };
@@ -64,4 +65,4 @@ public:
 
 
 
-#endif /* SRC_AUTONOMOUS_H_ */
+#endif /* SRC_AutonomousClass_H_ */

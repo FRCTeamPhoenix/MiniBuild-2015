@@ -1,7 +1,8 @@
+
 #include "WPILib.h"
 #include "DriveTrain.h"
 #include "Constants.h"
-#include "Autonomous.h"
+#include "AutonomousClass.h"
 /**
  * This is a demo program showing how to use Mecanum control with the driveTrain class.
  */
@@ -12,6 +13,9 @@ class Robot: public SampleRobot
    DriveTrain driveTrain;
    // only joystick
    Joystick stick;
+
+   AutonomousClass autoClass;
+
 
    //Drive Train Encoders
    Encoder m_leftRearDriveEncoder;
@@ -25,6 +29,7 @@ public:
       driveTrain(),
       // as they are declared above.
       stick(Port::joystickChannel),
+
       m_leftRearDriveEncoder(Port::LeftRearDriveEncoderChannelA, Port::LeftRearDriveEncoderChannelB),
       m_leftFrontDriveEncoder(Port::LeftFrontDriveEncoderChannelA, Port::LeftFrontDriveEncoderChannelB),
       m_rightFrontDriveEncoder(Port::RightFrontDriveEncoderChannelA, Port::RightFrontDriveEncoderChannelB),
@@ -54,6 +59,17 @@ public:
          Wait(0.005);
       }
    }
+
+   void Autonomous()
+     {
+        driveTrain.SetSafetyEnabled(false);
+
+          autoClass.automode1();
+
+     }
+
+
+
 };
 
 START_ROBOT_CLASS(Robot);
