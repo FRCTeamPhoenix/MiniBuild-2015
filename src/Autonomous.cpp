@@ -18,20 +18,31 @@ Autonomous::Autonomous(DriveTrain * driveTrain, Encoder * frontLeft, Encoder * f
         RFEncoder(frontRight),
         LFEncoder(frontLeft),
         LREncoder(backLeft),
-        RREncoder(backRight),
-        wheelEncoders(),
-        encoderTicks(),
-        oldEncoderTicks()
+        RREncoder(backRight)
+
 
 
 {
-       RFEncoder->Reset;
-       LFEncoder->Reset;
-       LREncoder->Reset;
-       RREncoder->Reset;
-       wheelEncoders={RFEncoder,LFEncoder,LREncoder,RREncoder};
-       encoderTicks={0,0,0,0};
-       oldEncoderTicks={0,0,0,0};
+       RFEncoder->Reset();
+       LFEncoder->Reset();
+       LREncoder->Reset();
+       RREncoder->Reset();
+
+       wheelEncoders[0]=RFEncoder;
+       wheelEncoders[1]=LFEncoder;
+       wheelEncoders[2]=LREncoder;
+       wheelEncoders[3]=RREncoder;
+
+       encoderTicks[0]=0;
+       encoderTicks[1]=0;
+       encoderTicks[2]=0;
+       encoderTicks[3]=0;
+
+       oldEncoderTicks[0]=0;
+       oldEncoderTicks[1]=0;
+       oldEncoderTicks[2]=0;
+       oldEncoderTicks[3]=0;
+
 
 
 
