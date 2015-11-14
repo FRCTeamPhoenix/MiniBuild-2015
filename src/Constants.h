@@ -26,6 +26,12 @@ struct TeleConstants{
    static constexpr float motorRunTime = 3;
 };
 
+struct driveButtons{
+   const static int loadButton = buttonA;
+   const static int fireButton = buttonB;
+
+};
+
 enum buttonNames {
 	buttonX = 1,
 	buttonA = 2,

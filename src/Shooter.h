@@ -9,22 +9,30 @@
 #define SRC_SHOOTER_H_
 #include "WPILib.h"
 #include "Constants.h"
+#include "Controllers.h"
+#include <Math.h>
 
 class Shooter {
-public:
+private:
    Encoder* m_encoder;
    Talon* m_magazineMotor;
    Talon* m_flywheelMotorRight;
    Talon* m_flywheelMotorLeft;
+   Controllers* m_controllers;
 
    void loadBall();
+   void checkLoader();
    void fireBall();
+   void checkButton();
+
+   int ticks = 0;
 
    Shooter(
          Encoder* encoder,
          Talon* magazineMotor,
          Talon* flywheelMotorRight,
-         Talon* flywheelMotorLeft);
+         Talon* flywheelMotorLeft,
+         Controllers* controllers);
    virtual ~Shooter();
 };
 
