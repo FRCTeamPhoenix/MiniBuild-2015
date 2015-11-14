@@ -11,7 +11,7 @@ public:
 
     Autonomous(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight);
 
-    void autoMove(float speed, int desiredx, int desiredy, int moveAngle);
+    void autoMove(double speed, int desiredx, int desiredy, int moveAngle);
 
     void updateEncoder();
 
@@ -21,21 +21,18 @@ public:
 
     void distanceCalculate(int moveAngle);
 
+    void automode2();
+
+    void automode3();
+
+    void autmode4();
+
     enum WheelPosition {
         RF,
         LF,
         LR,
         RR
     };
-    DriveTrain * m_driveTrain;
-    Encoder * RFEncoder;
-    Encoder * LFEncoder;
-    Encoder * RREncoder;
-    Encoder * LREncoder;
-    Encoder * wheelEncoders[4];
-
-    int encoderTicks[4];
-    int oldEncoderTicks[4];
 
     float m_position_x;
     float m_position_y;
@@ -43,6 +40,18 @@ public:
     float m_position_yRotate;
     float m_position;
     bool m_atPosition;
+    DriveTrain * m_driveTrain;
+    Encoder * RFEncoder;
+    Encoder * LFEncoder;
+    Encoder * LREncoder;
+    Encoder * RREncoder;
+
+    Encoder * wheelEncoders[4];
+
+    int encoderTicks[4];
+    int oldEncoderTicks[4];
+
+
 
 
 

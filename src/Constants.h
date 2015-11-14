@@ -29,14 +29,16 @@ struct Port{
    static const uint32_t RightRearDriveEncoderChannelB = 7;
 
 
+
+
 };
 struct autoConstants{
     //the number of ticks in one inch
-    static const float ticksPerInch=163.573;
+    static constexpr double ticksPerInch=163.573f;
     //radians to degrees 180/pi
-    static const float radToDegree = 57.3248;
+    static constexpr double radToDegree = 57.3248f;
     //move speed for auto, TODO tune this
-    static const float autoMoveSpeed =.2;
+    static constexpr double autoMoveSpeed =.2f;
 };
 
 

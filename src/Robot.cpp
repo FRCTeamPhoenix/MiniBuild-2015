@@ -1,6 +1,7 @@
 #include "WPILib.h"
 #include "DriveTrain.h"
 #include "Constants.h"
+#include "Autonomous.h"
 /**
  * This is a demo program showing how to use Mecanum control with the driveTrain class.
  */
@@ -24,10 +25,10 @@ public:
       driveTrain(),
       // as they are declared above.
       stick(Port::joystickChannel),
-      m_leftRearDriveEncoder(PortAssign::LeftRearDriveEncoderChannelA, PortAssign::LeftRearDriveEncoderChannelB),
-      m_leftFrontDriveEncoder(PortAssign::LeftFrontDriveEncoderChannelA, PortAssign::LeftFrontDriveEncoderChannelB),
-      m_rightFrontDriveEncoder(PortAssign::RightFrontDriveEncoderChannelA, PortAssign::RightFrontDriveEncoderChannelB),
-      m_rightRearDriveEncoder(PortAssign::RightRearDriveEncoderChannelA, PortAssign::RightRearDriveEncoderChannelB)
+      m_leftRearDriveEncoder(Port::LeftRearDriveEncoderChannelA, Port::LeftRearDriveEncoderChannelB),
+      m_leftFrontDriveEncoder(Port::LeftFrontDriveEncoderChannelA, Port::LeftFrontDriveEncoderChannelB),
+      m_rightFrontDriveEncoder(Port::RightFrontDriveEncoderChannelA, Port::RightFrontDriveEncoderChannelB),
+      m_rightRearDriveEncoder(Port::RightRearDriveEncoderChannelA, Port::RightRearDriveEncoderChannelB)
 
    {
       driveTrain.SetExpiration(0.1);
