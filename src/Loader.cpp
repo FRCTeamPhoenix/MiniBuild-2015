@@ -14,4 +14,3 @@ Loader::Loader() {
 Loader::~Loader() {
 	// TODO Auto-generated destructor stub
 }
-
