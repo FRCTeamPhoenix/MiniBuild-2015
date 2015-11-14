@@ -25,6 +25,7 @@ private:
 	      Talon* loadMotor,
 	      Controllers* controllers,
 	      DigitalInput* limitSwitch);
+public:
 	virtual ~Loader();
 };
 
