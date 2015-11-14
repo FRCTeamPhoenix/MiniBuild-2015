@@ -19,6 +19,13 @@ struct Port{
    const static uint32_t gamepadChannel = 0; // placeholder value
 };
 
+struct TeleConstants{
+   static constexpr float flywheelSpeed = 1;
+   static constexpr float magazineMotorSpeed = 0.5;
+   static const int magazineMotorTicksPerRotation = 512;
+   static constexpr float motorRunTime = 3;
+};
+
 enum buttonNames {
 	buttonX = 1,
 	buttonA = 2,
