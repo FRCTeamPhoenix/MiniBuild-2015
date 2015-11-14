@@ -25,7 +25,7 @@ public:
 		driveTrain.SetInvertedMotor(RobotDrive::kFrontLeftMotor, true);
 		// you may need to change or remove this to match your robot
 		driveTrain.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);
-		camera = new AxisCamera("10.0.42.20");
+		camera = new AxisCamera(NetPort::cameraIP);
 		targeting = Targeting(camera);
 }
 
