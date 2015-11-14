@@ -22,7 +22,7 @@ class Robot: public SampleRobot
    Encoder m_leftFrontDriveEncoder;
    Encoder m_rightFrontDriveEncoder;
    Encoder m_rightRearDriveEncoder;
-
+   Gyro m_gyro;
    AutonomousClass autoClass;
 
 public:
@@ -37,7 +37,8 @@ public:
       m_leftFrontDriveEncoder(Port::LeftFrontDriveEncoderChannelA, Port::LeftFrontDriveEncoderChannelB),
       m_rightFrontDriveEncoder(Port::RightFrontDriveEncoderChannelA, Port::RightFrontDriveEncoderChannelB),
       m_rightRearDriveEncoder(Port::RightRearDriveEncoderChannelA, Port::RightRearDriveEncoderChannelB),
-      autoClass(&driveTrain,&m_leftFrontDriveEncoder,&m_rightFrontDriveEncoder,&m_leftRearDriveEncoder,&m_rightRearDriveEncoder)
+      m_gyro(Port::gyroChannel),
+      autoClass(&driveTrain,&m_leftFrontDriveEncoder,&m_rightFrontDriveEncoder,&m_leftRearDriveEncoder,&m_rightRearDriveEncoder,&m_gyro)
 
    {
       driveTrain.SetExpiration(0.1);

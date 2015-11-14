@@ -9,7 +9,7 @@ class AutonomousClass{
 
 public:
 
-    AutonomousClass(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight);
+    AutonomousClass(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro);
 
     void autoMove(double speed, int desiredx, int desiredy, int desiredMoveAngle);
 
@@ -45,13 +45,14 @@ public:
     Encoder * LFEncoder;
     Encoder * LREncoder;
     Encoder * RREncoder;
+    Gyro * m_gyro;
 
     Encoder * wheelEncoders[4];
 
     int encoderTicks[4];
     int oldEncoderTicks[4];
     int ajustedMoveAngle;
-
+    float rotateAdjust;
 
 
 
