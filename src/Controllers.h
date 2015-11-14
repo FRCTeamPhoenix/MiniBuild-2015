@@ -22,7 +22,6 @@ public:
 	float GetYMovement(GenericHID::JoystickHand hand = GenericHID::kRightHand);
 	float GetZMovement();
 	float GetTwistFromSmallJoystick();
-
 	void rumble();
 
 private:
