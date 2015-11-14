@@ -6,9 +6,13 @@ Targeting::Targeting(AxisCamera * camera)
 	m_sourceFrame = new ColorImage(IMAQ_IMAGE_RGB);
 }
 
-void Targeting::displaySource()
+void Targeting::updateSource()
 {
 	m_camera->GetImage(m_sourceFrame);
-	CameraServer::GetInstance()->SetImage(m_sourceFrame->GetImaqImage());
 }
 
+void Targeting::displaySource()
+{
+	updateSource();
+	CameraServer::GetInstance()->SetImage(m_sourceFrame->GetImaqImage());
+}

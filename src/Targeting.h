@@ -7,7 +7,9 @@ class Targeting
 {
 public:
 	Targeting(AxisCamera * camera);
-	// Take the latest frame from the camera and send it to the driver station without any processing
+	// Takes the latest frame from the camera
+	void updateSource();
+	// Sends the latest frame to the driver station without any processing
 	void displaySource();
 private:
 	ColorImage *m_sourceFrame;
