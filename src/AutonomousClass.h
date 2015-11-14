@@ -50,7 +50,7 @@ public:
 
     int encoderTicks[4];
     int oldEncoderTicks[4];
-    int ajustedMoveAngle;
+    int adjustedMoveAngle;
 
 
 

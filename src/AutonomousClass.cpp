@@ -19,7 +19,7 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
         LFEncoder(frontLeft),
         LREncoder(backLeft),
         RREncoder(backRight),
-        ajustedMoveAngle(0)
+        adjustedMoveAngle(0)
 
 
 
@@ -63,10 +63,10 @@ void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desi
         m_atPosition=true;
     }
 
-    ajustedMoveAngle = desiredMoveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*AutoConstants::radToDegree;
+    adjustedMoveAngle = desiredMoveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*AutoConstants::radToDegree;
 
 
-    m_driveTrain->MecanumDrive_Polar(speed,desiredMoveAngle,0);
+    m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle,0);
 
     Wait(.05);
 
