@@ -70,11 +70,11 @@ void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desi
        }
 
        ajustedMoveAngle = desiredMoveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*AutoConstants::radToDegree;
-       rotateAdjust=-(((m_gyro->GetAngle())%360)/360);
+       //rotateAdjust = -(((m_gyro->GetAngle())%360)/360);
 
        m_driveTrain->MecanumDrive_Polar(speed,desiredMoveAngle,rotateAdjust);
 
-       Wait(.05);
+       Wait(.005);
 
 
     }
