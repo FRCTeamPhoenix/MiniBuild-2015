@@ -25,7 +25,7 @@ public:
 
     void automode3();
 
-    void autmode4();
+    void automode4();
 
     enum WheelPosition {
         RF,

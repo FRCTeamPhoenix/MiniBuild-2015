@@ -54,7 +54,7 @@ void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desi
     while (!m_atPosition){
 
     updateEncoder();
-    distanceCalculate(moveAngle);
+    distanceCalculate(desiredMoveAngle);
 
     if ((m_position_x < desiredx+1)
         && (m_position_x > desiredx-1)
@@ -67,6 +67,8 @@ void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desi
 
 
     m_driveTrain->MecanumDrive_Polar(speed,desiredMoveAngle,0);
+
+    Wait(.05);
 
 
     }
@@ -96,7 +98,7 @@ void AutonomousClass::distanceCalculate(int desiredMoveAngle){
 
 
 }
-
+//main auto drive mode
 void AutonomousClass::automode1(){
     autoMove(AutoConstants::autoMoveSpeed,0,48,0);
     resetEncoder();
@@ -107,4 +109,16 @@ void AutonomousClass::automode1(){
     autoMove(AutoConstants::autoMoveSpeed,-12,0,90);
     resetEncoder();
     autoMove(AutoConstants::autoMoveSpeed,0,-96,180);
+}
+//forward drive
+void AutonomousClass::automode2(){
+    autoMove(AutoConstants::autoMoveSpeed,0,24,0);
+}
+//drive left
+void AutonomousClass::automode3(){
+    autoMove(AutoConstants::autoMoveSpeed,-24,0,90);
+}
+//drive up and to the left at 45 degrees
+void AutonomousClass::automode4(){
+    autoMove(AutoConstants::autoMoveSpeed,-24,24,45);
 }

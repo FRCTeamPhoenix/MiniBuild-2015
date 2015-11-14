@@ -14,7 +14,7 @@ class Robot: public SampleRobot
    // only joystick
    Joystick stick;
 
-   AutonomousClass autoClass;
+
 
 
    //Drive Train Encoders
@@ -23,6 +23,8 @@ class Robot: public SampleRobot
    Encoder m_rightFrontDriveEncoder;
    Encoder m_rightRearDriveEncoder;
 
+   AutonomousClass autoClass;
+
 public:
    Robot() :
       // these must be initialized in the same order
@@ -30,10 +32,12 @@ public:
       // as they are declared above.
       stick(Port::joystickChannel),
 
+
       m_leftRearDriveEncoder(Port::LeftRearDriveEncoderChannelA, Port::LeftRearDriveEncoderChannelB),
       m_leftFrontDriveEncoder(Port::LeftFrontDriveEncoderChannelA, Port::LeftFrontDriveEncoderChannelB),
       m_rightFrontDriveEncoder(Port::RightFrontDriveEncoderChannelA, Port::RightFrontDriveEncoderChannelB),
-      m_rightRearDriveEncoder(Port::RightRearDriveEncoderChannelA, Port::RightRearDriveEncoderChannelB)
+      m_rightRearDriveEncoder(Port::RightRearDriveEncoderChannelA, Port::RightRearDriveEncoderChannelB),
+      autoClass(&driveTrain,&m_leftFrontDriveEncoder,&m_rightFrontDriveEncoder,&m_leftRearDriveEncoder,&m_rightRearDriveEncoder)
 
    {
       driveTrain.SetExpiration(0.1);
