@@ -58,7 +58,7 @@ void Autonomous::autoMove(double speed,int desiredx, int desiredy, int moveAngle
         m_atPosition=true;
     }
     else {
-        moveAngle = moveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*autoConstants::radToDegree;
+        moveAngle = moveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*AutoConstants::radToDegree;
 
         if (!m_atPosition){
             m_driveTrain->MecanumDrive_Polar(speed,moveAngle,0);
@@ -85,20 +85,20 @@ void Autonomous::distanceCalculate(int moveAngle){
     m_position_xRotate = ((encoderTicks[RF]+encoderTicks[LR])/2);
     m_position_yRotate = ((encoderTicks[LF]+encoderTicks[RR])/2);
     m_position = sqrt((m_position_yRotate* m_position_yRotate)+( m_position_xRotate* m_position_xRotate));
-    m_position_x = (m_position*(sin((moveAngle/autoConstants::radToDegree))))/autoConstants::ticksPerInch;
-    m_position_y = (m_position*(cos(moveAngle/autoConstants::radToDegree)))/autoConstants::ticksPerInch;
+    m_position_x = (m_position*(sin((moveAngle/AutoConstants::radToDegree))))/AutoConstants::ticksPerInch;
+    m_position_y = (m_position*(cos(moveAngle/AutoConstants::radToDegree)))/AutoConstants::ticksPerInch;
 
 
 }
 
 void Autonomous::automode1(){
-    autoMove(autoConstants::autoMoveSpeed,0,48,0);
+    autoMove(AutoConstants::autoMoveSpeed,0,48,0);
     resetEncoder();
-    autoMove(autoConstants::autoMoveSpeed,-48,0,90);
+    autoMove(AutoConstants::autoMoveSpeed,-48,0,90);
     resetEncoder();
-    autoMove(autoConstants::autoMoveSpeed,0,96,0);
+    autoMove(AutoConstants::autoMoveSpeed,0,96,0);
     resetEncoder();
-    autoMove(autoConstants::autoMoveSpeed,-12,0,90);
+    autoMove(AutoConstants::autoMoveSpeed,-12,0,90);
     resetEncoder();
-    autoMove(autoConstants::autoMoveSpeed,0,-96,180);
+    autoMove(AutoConstants::autoMoveSpeed,0,-96,180);
 }
