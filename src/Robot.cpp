@@ -1,4 +1,5 @@
 #include "WPILib.h"
+#include "Targeting.h"
 
 /**
  * This is a demo program showing how to use Mecanum control with the RobotDrive class.
@@ -17,18 +18,18 @@ class Robot: public SampleRobot
 	RobotDrive robotDrive;	// robot drive system
 	Joystick stick;			// only joystick
 
-	ColorImage *frame;
 	AxisCamera *camera;
+	Targeting targeting;
 
 public:
 	Robot() :
 			robotDrive(frontLeftChannel, rearLeftChannel,
 					   frontRightChannel, rearRightChannel),	// these must be initialized in the same order
 			stick(joystickChannel),								// as they are declared above.
-			camera()
+			camera(),
+			targeting(camera)
 	{
 		camera = new AxisCamera("10.0.42.20");
-		frame = new ColorImage(IMAQ_IMAGE_RGB);
 		robotDrive.SetExpiration(0.1);
 		robotDrive.SetInvertedMotor(RobotDrive::kFrontLeftMotor, true);	// invert the left side motors
 		robotDrive.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);	// you may need to change or remove this to match your robot
@@ -45,10 +46,6 @@ public:
         	// Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
         	// This sample does not use field-oriented drive, so the gyro input is set to zero.
 			robotDrive.MecanumDrive_Cartesian(stick.GetX(), stick.GetY(), stick.GetZ());
-
-			camera->GetImage(frame);
-
-			CameraServer::GetInstance()->SetImage(frame->GetImaqImage());
 
 			Wait(0.005); // wait 5ms to avoid hogging CPU cycles
 		}
