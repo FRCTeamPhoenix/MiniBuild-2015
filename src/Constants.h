@@ -11,13 +11,14 @@
 
 struct Port{
 // Channels for the wheels
-   const static uint32_t frontLeftChannel   = 2;
-   const static uint32_t rearLeftChannel    = 3;
-   const static uint32_t frontRightChannel  = 1;
-   const static uint32_t rearRightChannel   = 0;
+   const static uint32_t frontLeftChannel   = 1;
+   const static uint32_t rearLeftChannel    = 0;
+   const static uint32_t frontRightChannel  = 2;
+   const static uint32_t rearRightChannel   = 3;
+
    const static uint32_t joystickChannel     = 0;
 
-   //encoder ports, not accurate
+   //encoder ports
    static const uint32_t LeftRearDriveEncoderChannelA = 0;
    static const uint32_t LeftRearDriveEncoderChannelB = 1;
    static const uint32_t LeftFrontDriveEncoderChannelA = 2;
@@ -29,6 +30,17 @@ struct Port{
 
 
 };
+struct autoConstants{
+    //the number of ticks in one inch
+    static const float ticksPerInch=163.573;
+    //radians to degrees 180/pi
+    static const float radToDegree = 57.3248;
+    //move speed for auto, TODO tune this
+    static const float autoMoveSpeed =.2;
+};
+
+
+
 
 
 #endif /* SRC_CONSTANTS_H_ */
