@@ -14,5 +14,6 @@ void Targeting::updateSource()
 void Targeting::displaySource()
 {
 	updateSource();
+	m_sourceFrame->GetBluePlane();
 	CameraServer::GetInstance()->SetImage(m_sourceFrame->GetImaqImage());
 }
