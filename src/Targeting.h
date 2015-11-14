@@ -11,7 +11,6 @@ public:
 	void displaySource();
 private:
 	ColorImage *m_sourceFrame;
-	ColorImage *m_;
 	AxisCamera *m_camera;
 };
 
