@@ -11,8 +11,9 @@
 
 #include "Controllers.h"
 
-Controllers::Controllers(Joystick* joystick):
-	m_stick(joystick)
+Controllers::Controllers(Joystick* joystick, Joystick* gamepad):
+	m_stick(joystick),
+	m_gamepad(gamepad)
 {
 
 }
@@ -24,7 +25,7 @@ bool Controllers::GetJoystickButton(uint32_t joystickButton) {
 
 // Takes a gamepad button and returns whether or not it has been pressed.
 bool Controllers::GetGamepadButton(uint32_t gamepadButton) {
-	return m_stick->GetRawButton(gamepadButton);
+	return m_gamepad->GetRawButton(gamepadButton);
 }
 
 /*

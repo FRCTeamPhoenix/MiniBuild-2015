@@ -12,6 +12,7 @@ class Robot: public SampleRobot
    DriveTrain driveTrain;
    // only joystick
    Joystick m_stick;
+   Joystick m_gamepad;
    Controllers m_controller;
 
 public:
@@ -20,7 +21,8 @@ public:
 	  // as they are declared above.
       //driveTrain(),
 	  m_stick(Port::joystickChannel),
-      m_controller(&m_stick)
+	  m_gamepad(Port::gamepadChannel),
+      m_controller(&m_stick, &m_gamepad)
    {
       driveTrain.SetExpiration(0.1);
       // invert the left side motors

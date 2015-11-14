@@ -16,6 +16,7 @@ struct Port{
    const static uint32_t frontRightChannel  = 1;
    const static uint32_t rearRightChannel   = 0;
    const static uint32_t joystickChannel     = 1;
+   const static uint32_t gamepadChannel = 0; // placeholder value
 };
 
 enum buttonNames {
