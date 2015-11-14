@@ -19,6 +19,9 @@ public:
 	bool GetGamepadButton(uint32_t gamepadButton);
 	float GetTwistWithDeadZone(float deadZone = 0.05);
 	float GetXMovement(GenericHID::JoystickHand hand = GenericHID::kRightHand);
+	float GetYMovement(GenericHID::JoystickHand hand = GenericHID::kRightHand);
+	float GetZMovement();
+	float GetTwistFromSmallJoystick();
 
 	void rumble();
 
