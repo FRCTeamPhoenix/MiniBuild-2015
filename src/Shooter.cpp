@@ -36,14 +36,17 @@ Shooter::Shooter(
       m_flywheelMotorLeft->Set(-TeleConstants::flywheelSpeed);
       Wait(TeleConstants::motorRunTime);
    }
+   //Checks if the load button and fire button has been pressed
+   //If the button has been pressed it will call the function needed
    void Shooter::checkButton(){
       if (m_controllers->GetGamepadButton(driveButtons::loadButton)){
          loadBall();
       }
       if (m_controllers->GetGamepadButton(driveButtons::fireButton)){
-               fireBall();
+         fireBall();
       }
    }
+   //Checks if the wheel that loads the ball has moved all the way it needs to
    void Shooter::checkLoader(){
       if ((abs(ticks - m_encoder->Get())) < (TeleConstants::magazineMotorTicksPerRotation / 2)){
          m_magazineMotor->Set(0);
