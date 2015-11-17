@@ -14,7 +14,7 @@ class Robot: public SampleRobot
    // only joystick
    Joystick stick;
 
-
+   BuiltInAccelerometer accelerometer;
 
 
    //Drive Train Encoders
@@ -32,7 +32,7 @@ public:
       driveTrain(),
       // as they are declared above.
       stick(Port::joystickChannel),
-
+	  accelerometer(),
 
       m_leftRearDriveEncoder(Port::LeftRearDriveEncoderChannelA, Port::LeftRearDriveEncoderChannelB),
       m_leftFrontDriveEncoder(Port::LeftFrontDriveEncoderChannelA, Port::LeftFrontDriveEncoderChannelB),
@@ -71,6 +71,8 @@ public:
         driveTrain.SetSafetyEnabled(false);
 
           autoClass.automode1();
+          printf("%2.5f x direction \n",accelerometer.GetX());
+          printf("%2.5f y direction \n",accelerometer.GetY());
 
      }
 
