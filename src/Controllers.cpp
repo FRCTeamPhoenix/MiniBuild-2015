@@ -12,10 +12,6 @@
 #include "Controllers.h"
 
 #include "WPILib.h"
-//typedef enum
-//        {
-//                kLeftRumble, kRightRumble
-//        } RumbleType;
 
 Controllers::Controllers(Joystick* joystick, Joystick* gamepad):
 	m_stick(joystick),
