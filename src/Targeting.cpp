@@ -12,7 +12,7 @@ void Targeting::updateSource()
 BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 {
       //Should return either all black or all white. Test values
-      return inputImage->ThresholdRGB(255, 255, 255, 255, 255, 255);
+      return inputImage->ThresholdHSL(100,180,100,255,51,255);
 }
 
 void Targeting::displaySource()
@@ -21,4 +21,6 @@ void Targeting::displaySource()
 	m_filteredFrame = filterImage(m_sourceFrame);
 
 	CameraServer::GetInstance()->SetImage(filterImage(m_sourceFrame)->GetImaqImage());
+
+	delete m_filteredFrame;
 }
