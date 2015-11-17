@@ -34,12 +34,15 @@ struct Port{
 
 };
 struct AutoConstants{
+    //ticks per rotation of the encoder
+    static const int ticks=2048;
     //the number of ticks in one inch
-    static constexpr double ticksPerInch=163.573f;
+    static constexpr double ticksPerInch=ticks/12.56;
     //radians to degrees 180/pi
     static constexpr double radToDegree = 57.3248f;
     //move speed for auto, TODO tune this
     static constexpr double autoMoveSpeed =.2f;
+
 
 
 };

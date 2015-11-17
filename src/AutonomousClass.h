@@ -5,13 +5,13 @@
 
 
 
-class AutonomousClass{
+class AutonomousClass {
 
 public:
 
     AutonomousClass(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro);
 
-    void autoMove(double speed, int desiredx, int desiredy, int desiredMoveAngle);
+    void autoMove(double speed, int desiredx, int desiredy, int desiredMoveAngle,double maxSpeed);
 
     void updateEncoder();
 
@@ -36,9 +36,16 @@ public:
 
     float m_position_x;
     float m_position_y;
+
     float m_position_xRotate;
     float m_position_yRotate;
-    float m_position;
+
+    float m_currentPosition;
+
+    float m_finalPosition;
+
+    float m_time;
+
     bool m_atPosition;
     DriveTrain * m_driveTrain;
     Encoder * RFEncoder;
@@ -52,7 +59,7 @@ public:
     int encoderTicks[4];
     int oldEncoderTicks[4];
 
-    int ajustedMoveAngle;
+    int adjustedMoveAngle;
     float rotateAdjust;
 
 
