@@ -31,10 +31,9 @@ Shooter::Shooter(
    }
    //Function for making the flywheel motors spin
    void Shooter::fireBall(){
-
       m_flywheelMotorRight->Set(TeleConstants::flywheelSpeed);
       m_flywheelMotorLeft->Set(-TeleConstants::flywheelSpeed);
-      Wait(TeleConstants::motorRunTime);
+      Wait(TeleConstants::motorRunTimeShooter);
    }
    //Checks if the load button and fire button has been pressed
    //If the button has been pressed it will call the function needed

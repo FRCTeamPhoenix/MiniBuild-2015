@@ -20,32 +20,43 @@ struct Port{
 };
 
 struct TeleConstants{
+   //Shooter Constants
    static constexpr float flywheelSpeed = 1;
    static constexpr float magazineMotorSpeed = 0.5;
    static const int magazineMotorTicksPerRotation = 512;
-   static constexpr float motorRunTime = 3;
-};
+   static constexpr float motorRunTimeShooter = 3;
 
-struct driveButtons{
-   const static int loadButton = buttonA;
-   const static int fireButton = buttonB;
-
+   //Loader Constants
+   static constexpr float loaderMotorSpeed = 1;
+   static constexpr float motorRunTimeLoader = 5;
 };
 
 enum buttonNames {
-	buttonX = 1,
-	buttonA = 2,
-	buttonB = 3,
-	buttonY = 4,
-	buttonLB = 5,
-	buttonRB = 6,
-	triggerLT = 7,
-	triggerRT = 8,
-	buttonBack = 9,
-	buttonStart = 10,
-	joystickLeftButton = 11,
-	joystickRightButton = 12
+        buttonX = 1,
+        buttonA = 2,
+        buttonB = 3,
+        buttonY = 4,
+        buttonLB = 5,
+        buttonRB = 6,
+        triggerLT = 7,
+        triggerRT = 8,
+        buttonBack = 9,
+        buttonStart = 10,
+        joystickLeftButton = 11,
+        joystickRightButton = 12
 };
+
+struct driveButtons{
+   //Buttons for shooter
+   const static int loadButton = buttonA;
+   const static int fireButton = buttonB;
+   //Buttons for loader
+   const static int runLoaderMotor = buttonX;
+   const static int stopLoaderMotor = buttonY;
+
+};
+
+
 
 
 #endif /* SRC_CONSTANTS_H_ */

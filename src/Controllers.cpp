@@ -11,12 +11,22 @@
 
 #include "Controllers.h"
 
+#include "WPILib.h"
+typedef enum
+        {
+                kLeftRumble, kRightRumble
+        } RumbleType;
+
 Controllers::Controllers(Joystick* joystick, Joystick* gamepad):
 	m_stick(joystick),
 	m_gamepad(gamepad)
 {
 
 }
+
+   /*void Controllers::rumble(){
+      m_gamepad->SetRumble(kLeftRumble, 1.0f);
+   }*/
 
 // Takes a joystick button and returns whether or not it has been pressed.
 bool Controllers::GetJoystickButton(uint32_t joystickButton) {
