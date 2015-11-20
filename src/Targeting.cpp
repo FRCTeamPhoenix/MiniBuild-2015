@@ -13,7 +13,7 @@ void Targeting::updateSource()
 BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 {
       //This should threshold for the green that was on Ben's shirt that night (roughly green, tweak this before testing)
-      return inputImage->ThresholdHSL(100,140,40,80,10,40);
+      return inputImage->ThresholdHSL(100,140,40,100,10,100);
 }
 
 void Targeting::displaySource()
