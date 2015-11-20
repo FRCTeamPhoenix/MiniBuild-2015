@@ -27,7 +27,7 @@ public:
 
     void automode4();
 
-    enum WheelPosition {
+    enum WheelPosition { //enum for the purpose of looping from RF to LF to LR to RR
         RF,
         LF,
         LR,
@@ -37,7 +37,7 @@ public:
     float m_position_x;
     float m_position_y;
 
-    float m_position_xRotate;
+    float m_position_xRotate;  //the x and y for the rotated plane
     float m_position_yRotate;
 
     float m_currentPosition;
