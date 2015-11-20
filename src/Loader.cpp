@@ -16,7 +16,6 @@ Loader::Loader(
       m_loadMotor(loadMotor),
       m_controllers(controllers),
       m_limitSwitch(limitSwitch)
-
 {
 
 }

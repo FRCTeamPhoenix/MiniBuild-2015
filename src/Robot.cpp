@@ -39,11 +39,15 @@ public:
       driveTrain.SetSafetyEnabled(false);
       while (IsOperatorControl() && IsEnabled())
       {
-         // Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
-         // This sample does not use field-oriented drive, so the gyro input is set to zero.
-         // TODO change stick to m_controller
-    	  //driveTrain.MecanumDrive_Cartesian(stick.GetX(), stick.GetY(), stick.GetZ());
-
+    	 /*
+         Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
+         This sample does not use field-oriented drive, so the gyro input is set to zero.
+         TODO change stick to m_controller
+         */
+    	 float xMovement = m_controller.GetXMovement();
+    	 float yMovement = m_controller.GetYMovement();
+    	 float zMovement = m_controller.GetTwistWithDeadZone() + m_controller.GetTwistFromSmallJoystick();
+    	 driveTrain.MecanumDrive_Cartesian(xMovement, yMovement, zMovement);
          // wait 5ms to avoid hogging CPU cycles
          Wait(0.005);
       }
