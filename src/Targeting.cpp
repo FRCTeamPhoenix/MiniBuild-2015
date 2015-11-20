@@ -19,8 +19,14 @@ void Targeting::displaySource()
 {
 	updateSource();
 	m_filteredFrame = filterImage(m_sourceFrame);
+	ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
+	float gv = 255;
+	PixelValue pv;
+	pv.grayscale = gv;
 
-	CameraServer::GetInstance()->SetImage(filterImage(m_sourceFrame)->GetImaqImage());
+	imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
+
+	CameraServer::GetInstance()->SetImage(output->GetImaqImage());
 
 	delete m_filteredFrame;
 }
