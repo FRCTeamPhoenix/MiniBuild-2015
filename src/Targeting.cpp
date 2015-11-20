@@ -40,4 +40,6 @@ void Targeting::displaySource()
 	}
 
 	std::cout << "Total: " << total << "\n";
+
+	delete m_filteredFrame;
 }
