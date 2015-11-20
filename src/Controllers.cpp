@@ -11,12 +11,19 @@
 
 #include "Controllers.h"
 
+#include "WPILib.h"
+
 Controllers::Controllers(Joystick* joystick, Joystick* gamepad):
 	m_stick(joystick),
 	m_gamepad(gamepad)
 {
 
 }
+
+   void Controllers::rumble(){
+      m_gamepad->SetRumble(Joystick::RumbleType::kRightRumble, 1.0);
+      m_gamepad->SetRumble(Joystick::RumbleType::kLeftRumble, 1.0);
+   }
 
 // Takes a joystick button and returns whether or not it has been pressed.
 bool Controllers::GetJoystickButton(uint32_t joystickButton) {

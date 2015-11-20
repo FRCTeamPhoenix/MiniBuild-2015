@@ -7,14 +7,24 @@
 
 #ifndef SRC_LOADER_H_
 #define SRC_LOADER_H_
-#include "Talon.h"
-#include "DigitalInput.h"
+#include "WPILib.h"
+#include "Constants.h"
+#include "Controllers.h"
 
 class Loader {
+private:
+   Talon* m_loadMotor;
+   Controllers* m_controllers;
+   DigitalInput* m_limitSwitch;
 
+   void startLoader();
+   void stopLoader();
+   void updateLoader();
 
-public:
-	Loader();
+	Loader(
+	      Talon* loadMotor,
+	      Controllers* controllers,
+	      DigitalInput* limitSwitch);
 	virtual ~Loader();
 };
 
