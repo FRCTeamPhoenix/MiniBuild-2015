@@ -6,7 +6,7 @@
 
 
 
-AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro):
+AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro):
 
         m_position_x(0.0f),
         m_position_y(0.0f),
@@ -14,15 +14,17 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
         m_position_yRotate(0.0f),
         m_currentPosition(0.0f),
         m_finalPosition(0.0f),
+        m_desiredMoveAngle(0.0),
         m_time(0.0f),
         m_atPosition(false),
+        m_timer(m_timer),
         m_driveTrain(driveTrain),
         RFEncoder(frontRight),
         LFEncoder(frontLeft),
         LREncoder(backLeft),
         RREncoder(backRight),
         m_gyro(gyro),
-        ajustedMoveAngle(0),
+        adjustedMoveAngle(0),
         rotateAdjust(0)
 
 
@@ -56,12 +58,13 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
 
 }
 
-void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desiredMoveAngle, double maxTime){
+void AutonomousClass::autoMove(double speed,int desiredx, int desiredy,double maxTime){
     m_atPosition=false;
 
     m_finalPosition=sqrt((desiredy* desiredy)+(desiredx*desiredx));
-
-    while (!m_atPosition){
+    m_desiredMoveAngle=atan2(desiredy,desiredx);
+    m_timer->Start();
+    while (!m_atPosition && !m_timer->HasPeriodPassed(maxTime)){
 
         if (m_currentPosition < m_finalPosition+1 && m_currentPosition>m_finalPosition-1){
             m_atPosition=true;
@@ -83,7 +86,7 @@ void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desi
 
 
 
-       adjustedMoveAngle = desiredMoveAngle + atan2(desiredy-m_position_y, desiredx-m_position_x)*AutoConstants::radToDegree;
+       adjustedMoveAngle = desiredMoveAngle + (desiredMoveAngle-(atan2(m_position_yRotate,m_position_xRotate)-45)*AutoConstants::radToDegree);
        rotateAdjust = -(((m_gyro->GetAngle()))/360); //possible add % of 360
 
        m_driveTrain->MecanumDrive_Polar(speed,adjustedMoveAngle,rotateAdjust);
@@ -92,6 +95,8 @@ void AutonomousClass::autoMove(double speed,int desiredx, int desiredy, int desi
 
 
     }
+    m_timer->Stop();
+    m_timer->Reset();
 }
 
 void AutonomousClass::updateEncoder(){
@@ -114,10 +119,8 @@ void AutonomousClass::distanceCalculate(int desiredMoveAngle){
     m_position_xRotate = ((encoderTicks[RF]+encoderTicks[LR])/2);
     m_position_yRotate = ((encoderTicks[LF]+encoderTicks[RR])/2);
 
-    m_currentPosition = sqrt((m_position_yRotate* m_position_yRotate)+( m_position_xRotate* m_position_xRotate));
+    m_currentPosition = sqrt((m_position_yRotate* m_position_yRotate)+( m_position_xRotate* m_position_xRotate))/AutoConstants::ticksPerInch;
 
-    m_position_x = (m_currentPosition*(sin((desiredMoveAngle/AutoConstants::radToDegree))))/AutoConstants::ticksPerInch;
-    m_position_y = (m_currentPosition*(cos(desiredMoveAngle/AutoConstants::radToDegree)))/AutoConstants::ticksPerInch;
 
 
 
@@ -125,26 +128,26 @@ void AutonomousClass::distanceCalculate(int desiredMoveAngle){
 }
 //main auto drive mode
 void AutonomousClass::automode1(){
-    autoMove(AutoConstants::autoMoveSpeed,0,48,0,15);
+    autoMove(AutoConstants::autoMoveSpeed,0,48,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,-48,0,90,15);
+    autoMove(AutoConstants::autoMoveSpeed,-48,0,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,0,96,0,15);
+    autoMove(AutoConstants::autoMoveSpeed,0,96,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,-12,0,90,15);
+    autoMove(AutoConstants::autoMoveSpeed,-12,0,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,0,-96,180,15);
+    autoMove(AutoConstants::autoMoveSpeed,0,-96,15);
 }
 //forward drive
 void AutonomousClass::automode2(){
-    autoMove(AutoConstants::autoMoveSpeed,0,24,0,15);
+    autoMove(AutoConstants::autoMoveSpeed,0,24,15);
 }
 //drive left
 void AutonomousClass::automode3(){
-    autoMove(AutoConstants::autoMoveSpeed,-24,0,90,15);
+    autoMove(AutoConstants::autoMoveSpeed,-24,0,15);
 }
 //drive up and to the left at 45 degrees
 void AutonomousClass::automode4(){
 
-    autoMove(AutoConstants::autoMoveSpeed,-24,24,45,15);
+    autoMove(AutoConstants::autoMoveSpeed,-24,24,15);
 }

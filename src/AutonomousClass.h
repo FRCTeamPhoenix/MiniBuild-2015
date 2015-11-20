@@ -9,9 +9,9 @@ class AutonomousClass {
 
 public:
 
-    AutonomousClass(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro);
+    AutonomousClass(Timer * m_timer,DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro);
 
-    void autoMove(double speed, int desiredx, int desiredy, int desiredMoveAngle,double maxSpeed);
+    void autoMove(double speed, int desiredx, int desiredy,double maxSpeed);
 
     void updateEncoder();
 
@@ -46,7 +46,10 @@ public:
 
     float m_time;
 
+    double m_desiredMoveAngle;
+
     bool m_atPosition;
+    Timer * m_timer;
     DriveTrain * m_driveTrain;
     Encoder * RFEncoder;
     Encoder * LFEncoder;
