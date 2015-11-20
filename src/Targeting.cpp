@@ -16,7 +16,11 @@ void Targeting::updateSource()
 BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 {
       //This should threshold for the green that was on Ben's shirt that night (roughly green, tweak this before testing)
-      return inputImage->ThresholdHSL(100,140,40,100,10,100);
+    BinaryImage* i1 = inputImage->ThresholdHSL(0,360,0,30,0,30);
+    BinaryImage* i2 = inputImage->ThresholdHSL(0,360,0,30,55,75);
+    BinaryImage* i3 = inputImage->ThresholdHSL(0,0,0,0,0,0);
+    imaqAdd(i3->GetImaqImage(), i1->GetImaqImage(), i2->GetImaqImage());
+    return i3;
 }
 
 void Targeting::displaySource()
@@ -24,6 +28,7 @@ void Targeting::displaySource()
 	//Update the source and filter the image each frame
 	updateSource();
 	m_filteredFrame = filterImage(m_sourceFrame);
+	m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
 	ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
 	float gv = 255;
 	PixelValue pv;
