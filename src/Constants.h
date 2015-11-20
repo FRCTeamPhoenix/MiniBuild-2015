@@ -11,10 +11,10 @@
 
 struct Port{
 // Channels for the wheels
-   const static uint32_t frontLeftChannel   = 2;
-   const static uint32_t rearLeftChannel    = 3;
-   const static uint32_t frontRightChannel  = 1;
-   const static uint32_t rearRightChannel   = 0;
+   const static uint32_t frontLeftChannel   = 1;
+   const static uint32_t rearLeftChannel    = 0;
+   const static uint32_t frontRightChannel  = 2;
+   const static uint32_t rearRightChannel   = 3;
    const static uint32_t joystickChannel     = 1;
    const static uint32_t gamepadChannel = 0; // placeholder value
 };

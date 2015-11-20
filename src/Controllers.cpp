@@ -63,7 +63,7 @@ float Controllers::GetTwistFromSmallJoystick() {
 }
 
 float Controllers::GetXMovement(GenericHID::JoystickHand hand) {
-	float deadZone = 0.05;
+	float deadZone = 0.1;
 	float xMovement = m_stick->GetX(hand);
 		if (fabs(xMovement) <= deadZone) {
 			return 0;
@@ -73,7 +73,7 @@ float Controllers::GetXMovement(GenericHID::JoystickHand hand) {
 }
 
 float Controllers::GetYMovement(GenericHID::JoystickHand hand) {
-	float deadZone = 0.05;
+	float deadZone = 0.1;
 	float yMovement = m_stick->GetY(hand);
 		if (fabs(yMovement) <= deadZone) {
 			return 0;
