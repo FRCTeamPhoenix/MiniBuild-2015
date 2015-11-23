@@ -40,17 +40,17 @@ bool Controllers::GetGamepadButton(uint32_t gamepadButton) {
  * A deadzone is built in so that motion will not occur if there has been
  * a small amount of inadvertent rotation.
  */
-float Controllers::GetTwistWithDeadZone(float deadZone) {
-	float twistValue = m_stick->GetTwist();
-	if (fabs(twistValue) <= deadZone) {
-		return 0;
-	} else {
-		return twistValue;
-	}
-}
+//float Controllers::GetTwistWithDeadZone(float deadZone) {
+//	float twistValue = m_stick->GetTwist();
+//	if (fabs(twistValue) <= deadZone) {
+//		return 0;
+//	} else {
+//		return twistValue;
+//	}
+//}
 
 float Controllers::GetTwistFromSmallJoystick() {
-	float twistValue = 0;
+	float twistValue = 0.0f;
 	// turns right
 	if (GetJoystickButton(joystickRightButton)) {
 		twistValue += 0.01;
@@ -62,31 +62,31 @@ float Controllers::GetTwistFromSmallJoystick() {
 	return twistValue;
 }
 
-float Controllers::GetXMovement(GenericHID::JoystickHand hand) {
-	float deadZone = 0.1;
-	float xMovement = m_stick->GetX(hand);
-		if (fabs(xMovement) <= deadZone) {
-			return 0;
-		} else {
-			return xMovement;
-		}
+float Controllers::GetStickX() {
+	if (fabs(m_stick->GetX()) <= controlsConstants::joystickDeadZone) {
+		return 0.0f;
+	} else {
+		return m_stick->GetX() / 5;
+	}
 }
 
-float Controllers::GetYMovement(GenericHID::JoystickHand hand) {
-	float deadZone = 0.1;
-	float yMovement = m_stick->GetY(hand);
-		if (fabs(yMovement) <= deadZone) {
-			return 0;
-		} else {
-			return yMovement;
-		}
+float Controllers::GetStickY() {
+	if (fabs(m_stick->GetY()) <= controlsConstants::joystickDeadZone) {
+		return 0.0f;
+	} else {
+		return m_stick->GetY() / 5;
+	}
 }
 
-/* This may not be needed because of the twist functions
-float Controllers::GetZMovement() {
-	return m_stick->GetZ;
+
+float Controllers::GetStickZ() {
+	if (fabs(m_stick->GetZ()) <= controlsConstants::joystickDeadZone) {
+		return 0.0f;
+	} else {
+		return m_stick->GetZ() / 10;
+	}
 }
-*/
+
 
 Controllers::~Controllers() {
 

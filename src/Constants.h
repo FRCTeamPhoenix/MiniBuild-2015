@@ -15,8 +15,8 @@ struct Port{
    const static uint32_t rearLeftChannel    = 0;
    const static uint32_t frontRightChannel  = 2;
    const static uint32_t rearRightChannel   = 3;
-   const static uint32_t joystickChannel     = 1;
-   const static uint32_t gamepadChannel = 0; // placeholder value
+   const static uint32_t joystickChannel     = 0;
+   const static uint32_t gamepadChannel = 1; // placeholder value
 };
 
 struct TeleConstants{
@@ -48,14 +48,19 @@ enum buttonNames {
 
 struct driveButtons{
    //Buttons for shooter
-   const static int loadButton = buttonA;
-   const static int fireButton = buttonB;
+   static const int loadButton = buttonA;
+   static const int fireButton = buttonB;
    //Buttons for loader
-   const static int runLoaderMotor = buttonX;
-   const static int stopLoaderMotor = buttonY;
+   static const int runLoaderMotor = buttonX;
+   static const int stopLoaderMotor = buttonY;
 
 };
 
+struct controlsConstants{
+   static constexpr float joystickDeadZone = 0.1;
+
+   static constexpr float gamepadDeadZone = 0.1;
+};
 
 
 
