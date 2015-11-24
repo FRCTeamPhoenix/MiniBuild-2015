@@ -11,7 +11,7 @@ public:
 
     AutonomousClass(Timer * m_timer,DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro);
 
-    void autoMove(double speed, int desiredx, int desiredy,double maxSpeed);
+    void autoMove(int desiredx, int desiredy,double maxSpeed);
 
     void updateEncoder();
 
@@ -34,6 +34,7 @@ public:
         RR
     };
 
+ private:
     float m_position_x;
     float m_position_y;
 

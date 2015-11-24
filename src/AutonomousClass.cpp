@@ -58,55 +58,43 @@ AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encod
 
 }
 
-void AutonomousClass::autoMove(double speed,int desiredx, int desiredy,double maxTime){
-    m_atPosition=false;
-
-    m_finalPosition=sqrt((desiredy* desiredy)+(desiredx*desiredx));
-    m_desiredMoveAngle=atan2(desiredy,desiredx);
+void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
+    double speed = 0;
+    m_atPosition = false;
+    m_finalPosition = sqrt((desiredy * desiredy) + (desiredx * desiredx));
+    m_desiredMoveAngle = atan2(desiredy, desiredx);
     m_timer->Start();
+
     while (!m_atPosition && !m_timer->HasPeriodPassed(maxTime)){
 
-        if (m_currentPosition < m_finalPosition+1 && m_currentPosition>m_finalPosition-1){
-            m_atPosition=true;
-        }
+        if (m_currentPosition < m_finalPosition + 1 && m_currentPosition > m_finalPosition - 1){
+            m_atPosition = true;
+       }
 
        updateEncoder();
        distanceCalculate(desiredMoveAngle);
 
-
-       if (m_currentPosition/m_finalPosition <.8){
-           speed =1.0;
+       if (m_currentPosition / m_finalPosition < .8){
+           speed = 1.0;
        }
-       else if (m_currentPosition/m_finalPosition > .9 && m_currentPosition/m_finalPosition <.95){
-           speed =.5;
+       else if (m_currentPosition/m_finalPosition > .9 && m_currentPosition/m_finalPosition < .95){
+           speed = .5;
        }
-       else if (m_currentPosition/m_finalPosition > .95){
-                  speed =0;
-              }
 
-
-
-       adjustedMoveAngle = desiredMoveAngle + (desiredMoveAngle-(atan2(m_position_yRotate,m_position_xRotate)-45)*AutoConstants::radToDegree);
+       adjustedMoveAngle = desiredMoveAngle + (desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
        rotateAdjust = -(((m_gyro->GetAngle()))/360); //possible add % of 360
-
-       m_driveTrain->MecanumDrive_Polar(speed,adjustedMoveAngle,rotateAdjust);
-
+       m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle, rotateAdjust);
        Wait(.005);
-
-
     }
+
     m_timer->Stop();
     m_timer->Reset();
 }
 
 void AutonomousClass::updateEncoder(){
     for (int i = RF; i <= RR; i++){
-            encoderTicks[i]=wheelEncoders[i]->Get()-oldEncoderTicks[i];
-        }
-
-
-
-
+        encoderTicks[i] = wheelEncoders[i]->Get()-oldEncoderTicks[i];
+    }
 }
 
 
