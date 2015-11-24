@@ -1,4 +1,4 @@
-#include <Task.h>
+#include <thread>
 #include "WPILib.h"
 #include "Targeting.h"
 #include "DriveTrain.h"
@@ -35,8 +35,8 @@ public:
   void OperatorControl()
   {
     driveTrain.SetSafetyEnabled(false);
-    Task t("TargetingThread", targeting.displaySource());
-    t.Start();
+    std::thread t([this]{targeting.displaySource();});
+    t.detach();
     while (IsOperatorControl() && IsEnabled())
       {
 	// Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
@@ -46,7 +46,6 @@ public:
 	// wait 5ms to avoid hogging CPU cycles
 	Wait(0.005);
       }
-    t.Stop();
   }
 };
 
