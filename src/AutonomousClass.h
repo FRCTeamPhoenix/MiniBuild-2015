@@ -73,17 +73,6 @@ public:
     //adjusted angle of movement and rotation
     int adjustedMoveAngle;
     float rotateAdjust;
-
-
-
-
-    virtual ~AutonomousClass(){};
-
-
 };
-
-
-
-
 
 #endif /* SRC_AutonomousClass_H_ */

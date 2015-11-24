@@ -16,6 +16,8 @@ class Robot: public SampleRobot
 
    BuiltInAccelerometer accelerometer;
 
+   //Timer for autonomous
+   Timer timer;
 
    //Drive Train Encoders
    Encoder m_leftRearDriveEncoder;
@@ -39,7 +41,7 @@ public:
       m_rightFrontDriveEncoder(Port::RightFrontDriveEncoderChannelA, Port::RightFrontDriveEncoderChannelB),
       m_rightRearDriveEncoder(Port::RightRearDriveEncoderChannelA, Port::RightRearDriveEncoderChannelB),
       m_gyro(Port::gyroChannel),
-      autoClass(&driveTrain,&m_leftFrontDriveEncoder,&m_rightFrontDriveEncoder,&m_leftRearDriveEncoder,&m_rightRearDriveEncoder,&m_gyro)
+      autoClass(&timer,&driveTrain,&m_leftFrontDriveEncoder,&m_rightFrontDriveEncoder,&m_leftRearDriveEncoder,&m_rightRearDriveEncoder,&m_gyro)
 
    {
       driveTrain.SetExpiration(0.1);

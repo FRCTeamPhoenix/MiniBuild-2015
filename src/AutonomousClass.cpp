@@ -80,17 +80,17 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
        //update the encoder!
        updateEncoder();
        //calculate rotated polar distance
-       distanceCalculate(desiredMoveAngle);
+       distanceCalculate(m_desiredMoveAngle);
        //if the robot is not 80% of the way to the target location, increase speed to 1
        if (m_currentPosition / m_finalPosition < .8){
            speed = 0.3;
        }
        //if the robot is more than 90% and less than 95% to the target location go at half speed
        else if (m_currentPosition/m_finalPosition > .9 && m_currentPosition/m_finalPosition < .95){
-           speed = .025;
+           speed = 0.25;
        }
        // adjust the angle based on calculated distance
-       adjustedMoveAngle = desiredMoveAngle + (desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
+       adjustedMoveAngle = m_desiredMoveAngle + (m_desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
        rotateAdjust = -(((m_gyro->GetAngle()))/360); //mod rotation by 360 degrees
        m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle, rotateAdjust);//drive
        Wait(.005);
@@ -123,26 +123,25 @@ void AutonomousClass::distanceCalculate(int desiredMoveAngle){
 }
 //main auto drive mode
 void AutonomousClass::automode1(){
-    autoMove(AutoConstants::autoMoveSpeed,0,48,15);
+    autoMove(0,48,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,-48,0,15);
+    autoMove(-48,0,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,0,96,15);
+    autoMove(0,96,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,-12,0,15);
+    autoMove(-12,0,15);
     resetEncoder();
-    autoMove(AutoConstants::autoMoveSpeed,0,-96,15);
+    autoMove(0,-96,15);
 }
 //forward drive
 void AutonomousClass::automode2(){
-    autoMove(AutoConstants::autoMoveSpeed,0,24,15);
+    autoMove(0,24,15);
 }
 //drive left
 void AutonomousClass::automode3(){
-    autoMove(AutoConstants::autoMoveSpeed,-24,0,15);
+    autoMove(-24,0,15);
 }
 //drive up and to the left at 45 degrees
 void AutonomousClass::automode4(){
-
-    autoMove(AutoConstants::autoMoveSpeed,-24,24,15);
+    autoMove(-24,24,15);
 }
