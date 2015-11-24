@@ -99,29 +99,27 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
     m_timer->Stop();
     m_timer->Reset();
 }
-
+//Update wheel encoders
 void AutonomousClass::updateEncoder(){
+   //This loops over each wheel
     for (int i = RF; i <= RR; i++){
         encoderTicks[i] = wheelEncoders[i]->Get()-oldEncoderTicks[i];
     }
 }
 
-
+//Reset wheel encoders without resetting hardware
 void AutonomousClass::resetEncoder(){
+   //This loops over each wheel
     for (int i = RF; i <= RR; i++){
            oldEncoderTicks[i]=encoderTicks[i];
        }
 }
+//Calculate new position based on move angle
 void AutonomousClass::distanceCalculate(int desiredMoveAngle){
     m_position_xRotate = ((encoderTicks[RF]+encoderTicks[LR])/2);
     m_position_yRotate = ((encoderTicks[LF]+encoderTicks[RR])/2);
 
     m_currentPosition = sqrt((m_position_yRotate* m_position_yRotate)+( m_position_xRotate* m_position_xRotate))/AutoConstants::ticksPerInch;
-
-
-
-
-
 }
 //main auto drive mode
 void AutonomousClass::automode1(){
