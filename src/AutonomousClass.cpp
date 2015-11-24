@@ -83,11 +83,11 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
        distanceCalculate(desiredMoveAngle);
        //if the robot is not 80% of the way to the target location, increase speed to 1
        if (m_currentPosition / m_finalPosition < .8){
-           speed = 1.0;
+           speed = 0.3;
        }
        //if the robot is more than 90% and less than 95% to the target location go at half speed
        else if (m_currentPosition/m_finalPosition > .9 && m_currentPosition/m_finalPosition < .95){
-           speed = .5;
+           speed = .025;
        }
        // adjust the angle based on calculated distance
        adjustedMoveAngle = desiredMoveAngle + (desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
