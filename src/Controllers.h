@@ -15,12 +15,16 @@ class Controllers {
 public:
 	Controllers(Joystick* joystick, Joystick* gamepad);
 	virtual ~Controllers();
+
 	bool GetJoystickButton(uint32_t joystickButton);
 	bool GetGamepadButton(uint32_t gamepadButton);
+
 	float GetTwistWithDeadZone(float deadZone = 0.05);
-	float GetXMovement(GenericHID::JoystickHand hand = GenericHID::kRightHand);
-	float GetYMovement(GenericHID::JoystickHand hand = GenericHID::kRightHand);
-	float GetZMovement();
+
+	float GetStickX();
+	float GetStickY();
+	float GetStickZ();
+
 	float GetTwistFromSmallJoystick();
 	void rumble();
 
