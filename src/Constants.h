@@ -42,7 +42,8 @@ struct AutoConstants{
     static constexpr double radToDegree = 57.3248f;
     //move speed for auto, TODO tune this
     static constexpr double autoMoveSpeed =.2f;
-
+    //distance from final position that we need
+    static constexpr double finalPositionTolerance = 1;
 
 
 };

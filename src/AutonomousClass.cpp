@@ -31,6 +31,8 @@ AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encod
 
 
 {
+	   //reset all the encoders and the gyro
+	   //(this is okay since we are in a constructor and it won't be called during runtime)
        RFEncoder->Reset();
        LFEncoder->Reset();
        LREncoder->Reset();
@@ -38,11 +40,13 @@ AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encod
        m_gyro->InitGyro();
        m_gyro->Reset();
 
+       //Initialize wheel encoder array to args
        wheelEncoders[0]=RFEncoder;
        wheelEncoders[1]=LFEncoder;
        wheelEncoders[2]=LREncoder;
        wheelEncoders[3]=RREncoder;
 
+       //Initialize encoder ticks and old encoder ticks to all zero for each encoder
        encoderTicks[0]=0;
        encoderTicks[1]=0;
        encoderTicks[2]=0;
@@ -59,19 +63,22 @@ AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encod
 }
 
 void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
-    double speed = 0;
-    m_atPosition = false;
-    m_finalPosition = sqrt((desiredy * desiredy) + (desiredx * desiredx));
-    m_desiredMoveAngle = atan2(desiredy, desiredx);
-    m_timer->Start();
+    double speed = 0; //The speed with which we move (changed each loop)
+    m_atPosition = false; //at first, we're not at our desired position
+    m_finalPosition = sqrt((desiredy * desiredy) + (desiredx * desiredx)); //calc magnitude of position vector
+    m_desiredMoveAngle = atan2(desiredy, desiredx); //calc angle of position vector (to polar)
+    m_timer->Start(); //start timer for timeout period
 
+    //while we're not at our position and we haven't reached a timeout period
     while (!m_atPosition && !m_timer->HasPeriodPassed(maxTime)){
-
-        if (m_currentPosition < m_finalPosition + 1 && m_currentPosition > m_finalPosition - 1){
+    	//if we're within a certain distance of our goal, we're at position
+       if (abs(m_currentPosition - m_finalPosition) < AutoConstants::finalPositionTolerance){
             m_atPosition = true;
        }
 
+       //update the encoder!
        updateEncoder();
+       //calculate rotated polar distance
        distanceCalculate(desiredMoveAngle);
 
        if (m_currentPosition / m_finalPosition < .8){
