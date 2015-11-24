@@ -62,6 +62,7 @@ AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encod
 
 }
 
+//moves to desired position
 void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
     double speed = 0; //The speed with which we move (changed each loop)
     m_atPosition = false; //at first, we're not at our desired position
@@ -80,20 +81,21 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
        updateEncoder();
        //calculate rotated polar distance
        distanceCalculate(desiredMoveAngle);
-
+       //if the robot is not 80% of the way to the target location, increase speed to 1
        if (m_currentPosition / m_finalPosition < .8){
            speed = 1.0;
        }
+       //if the robot is more than 90% and less than 95% to the target location go at half speed
        else if (m_currentPosition/m_finalPosition > .9 && m_currentPosition/m_finalPosition < .95){
            speed = .5;
        }
-
+       // adjust the angle based on calculated distance
        adjustedMoveAngle = desiredMoveAngle + (desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
-       rotateAdjust = -(((m_gyro->GetAngle()))/360); //possible add % of 360
-       m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle, rotateAdjust);
+       rotateAdjust = -(((m_gyro->GetAngle()))/360); //mod rotation by 360 degrees
+       m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle, rotateAdjust);//drive
        Wait(.005);
     }
-
+    //reset timer to start again
     m_timer->Stop();
     m_timer->Reset();
 }
