@@ -9,7 +9,7 @@ class AutonomousClass {
 
 public:
 	//constructor
-    AutonomousClass(Timer * m_timer,DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro);
+    AutonomousClass(DriveTrain * drivetrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro);
     //moves to desired position
     void autoMove(int desiredx, int desiredy,double maxSpeed);
     //Update wheel encoders

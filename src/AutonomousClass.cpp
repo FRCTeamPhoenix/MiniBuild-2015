@@ -6,7 +6,7 @@
 
 
 
-AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro):
+AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, Encoder * frontRight, Encoder * backLeft, Encoder * backRight, Gyro * gyro):
 
         m_position_x(0.0f),
         m_position_y(0.0f),
@@ -17,7 +17,6 @@ AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encod
         m_desiredMoveAngle(0.0),
         m_time(0.0f),
         m_atPosition(false),
-        m_timer(m_timer),
         m_driveTrain(driveTrain),
         RFEncoder(frontRight),
         LFEncoder(frontLeft),
@@ -64,14 +63,16 @@ AutonomousClass::AutonomousClass(Timer * m_timer, DriveTrain * driveTrain, Encod
 
 //moves to desired position
 void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
+	Timer timer;
+
     double speed = 0; //The speed with which we move (changed each loop)
     m_atPosition = false; //at first, we're not at our desired position
     m_finalPosition = sqrt((desiredy * desiredy) + (desiredx * desiredx)); //calc magnitude of position vector
     m_desiredMoveAngle = atan2(desiredy, desiredx); //calc angle of position vector (to polar)
-    m_timer->Start(); //start timer for timeout period
+    timer.Start(); //start timer for timeout period
 
     //while we're not at our position and we haven't reached a timeout period
-    while (!m_atPosition && !m_timer->HasPeriodPassed(maxTime)){
+    while (!m_atPosition && !timer.HasPeriodPassed(maxTime)){
     	//if we're within a certain distance of our goal, we're at position
        if (abs(m_currentPosition - m_finalPosition) < AutoConstants::finalPositionTolerance){
             m_atPosition = true;
@@ -96,8 +97,8 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
        Wait(.005);
     }
     //reset timer to start again
-    m_timer->Stop();
-    m_timer->Reset();
+    timer.Stop();
+    timer.Reset();
 }
 //Update wheel encoders
 void AutonomousClass::updateEncoder(){
