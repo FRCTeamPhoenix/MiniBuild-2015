@@ -57,10 +57,10 @@ public:
     //here are all the pointers to hardware elements
     Timer * m_timer;
     DriveTrain * m_driveTrain;
-    Encoder * RFEncoder;
+    /*Encoder * RFEncoder;
     Encoder * LFEncoder;
     Encoder * LREncoder;
-    Encoder * RREncoder;
+    Encoder * RREncoder;*/
     Gyro * m_gyro;
 
     //and an array used to iterate over the encoders

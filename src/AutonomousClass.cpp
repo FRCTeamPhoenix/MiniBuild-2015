@@ -18,47 +18,35 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
         m_time(0.0f),
         m_atPosition(false),
         m_driveTrain(driveTrain),
-        RFEncoder(frontRight),
-        LFEncoder(frontLeft),
-        LREncoder(backLeft),
-        RREncoder(backRight),
         m_gyro(gyro),
         adjustedMoveAngle(0),
         rotateAdjust(0)
-
-
-
-
 {
 	   //reset all the encoders and the gyro
 	   //(this is okay since we are in a constructor and it won't be called during runtime)
-       RFEncoder->Reset();
-       LFEncoder->Reset();
-       LREncoder->Reset();
-       RREncoder->Reset();
+       frontRight->Reset();
+       frontLeft->Reset();
+       backLeft->Reset();
+       backRight->Reset();
        m_gyro->InitGyro();
        m_gyro->Reset();
 
        //Initialize wheel encoder array to args
-       wheelEncoders[0]=RFEncoder;
-       wheelEncoders[1]=LFEncoder;
-       wheelEncoders[2]=LREncoder;
-       wheelEncoders[3]=RREncoder;
+       wheelEncoders[RF]=frontRight;
+       wheelEncoders[LF]=frontLeft;
+       wheelEncoders[LR]=backLeft;
+       wheelEncoders[RR]=backRight;
 
        //Initialize encoder ticks and old encoder ticks to all zero for each encoder
-       encoderTicks[0]=0;
-       encoderTicks[1]=0;
-       encoderTicks[2]=0;
-       encoderTicks[3]=0;
+       encoderTicks[RF]=0;
+       encoderTicks[LF]=0;
+       encoderTicks[LR]=0;
+       encoderTicks[RR]=0;
 
-       oldEncoderTicks[0]=0;
-       oldEncoderTicks[1]=0;
-       oldEncoderTicks[2]=0;
-       oldEncoderTicks[3]=0;
-
-
-
-
+       oldEncoderTicks[RF]=0;
+       oldEncoderTicks[LF]=0;
+       oldEncoderTicks[LR]=0;
+       oldEncoderTicks[RR]=0;
 }
 
 //moves to desired position
