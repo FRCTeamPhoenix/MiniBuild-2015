@@ -11,6 +11,10 @@ void Targeting::setupCamera(AxisCamera* camera){
 	m_camera = camera;
 }
 
+void Targeting::setupCameraServer(CameraServer* cameraServer){
+	m_cameraServer = cameraServer;
+}
+
 void Targeting::updateSource()
 {
 	m_camera->GetImage(m_sourceFrame);
@@ -31,6 +35,7 @@ void Targeting::runTargeting()
 	while(true){
 		//Update the source and filter the image each frame
 		updateSource();
+
 		m_filteredFrame = filterImage(m_sourceFrame);
 		m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
 		ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
@@ -40,19 +45,11 @@ void Targeting::runTargeting()
 
 		imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
 
-		CameraServer::GetInstance()->SetImage(output->GetImaqImage());
-		//Find the total percent of the image which is occupied by the target color (green)
-		double total = 0;
-
-		for(int i=0;i<m_filteredFrame->GetNumberParticles();i++){
-			total += m_filteredFrame->GetParticleAnalysisReport(i).particleToImagePercent;
-		}
-
-		std::cout << "Total: " << total << "\n";
+		m_cameraServer->SetImage(output->GetImaqImage());
 
 		delete m_filteredFrame;
 		delete output;
 
-		Wait(0.05);
+		Wait(0.005);
 	}
 }

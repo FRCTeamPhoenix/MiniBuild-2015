@@ -28,6 +28,7 @@ public:
 		driveTrain.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);
 		camera = new AxisCamera(cameraIP);
 		targeting.setupCamera(camera);
+		targeting.setupCameraServer(CameraServer::GetInstance());
 }
 
 	/**

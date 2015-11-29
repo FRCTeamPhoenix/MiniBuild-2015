@@ -15,10 +15,12 @@ public:
 	//the source to perform operations on
 	BinaryImage* filterImage(ColorImage* inputImage);
 	void setupCamera(AxisCamera* camera);
+	void setupCameraServer(CameraServer * cameraServer);
 private:
 	ColorImage *m_sourceFrame;
 	BinaryImage *m_filteredFrame;
 	AxisCamera *m_camera;
+	CameraServer *m_cameraServer;
 };
 
 #endif /* SRC_TARGETING_H_ */
