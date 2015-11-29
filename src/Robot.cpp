@@ -19,7 +19,7 @@ public:
 	Robot() :
 		driveTrain(),
 		stick(Port::joystickChannel),
-		targeting(camera)
+		targeting()
 {
 		driveTrain.SetExpiration(0.1);
 		// invert the left side motors
@@ -27,6 +27,7 @@ public:
 		// you may need to change or remove this to match your robot
 		driveTrain.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);
 		camera = new AxisCamera(cameraIP);
+		targeting.setupCamera(camera);
 }
 
 	/**
@@ -37,7 +38,6 @@ public:
 		driveTrain.SetSafetyEnabled(false);
 		std::thread targetingThread([this]{targeting.runTargeting();});
 		targetingThread.detach();
-		targeting.start();
 		while (IsOperatorControl() && IsEnabled())
 		{
 			// Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
@@ -47,7 +47,6 @@ public:
 			// wait 5ms to avoid hogging CPU cycles
 			Wait(0.005);
 		}
-		targeting.stop();
 	}
 };
 

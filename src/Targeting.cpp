@@ -1,12 +1,14 @@
 #include "Targeting.h"
 #include "WPILib.h"
 
-Targeting::Targeting(AxisCamera* camera):
-		m_camera(camera)
+Targeting::Targeting()
 {
 	m_sourceFrame = new ColorImage(IMAQ_IMAGE_RGB);
 	m_filteredFrame = new BinaryImage();
-	m_targetingOn = false;
+}
+
+void Targeting::setupCamera(AxisCamera* camera){
+	m_camera = camera;
 }
 
 void Targeting::updateSource()
@@ -24,40 +26,33 @@ BinaryImage* Targeting::filterImage(ColorImage* inputImage)
     return i3;
 }
 
-void Targeting::start(){
-	m_targetingOn = true;
-}
-
-void Targeting::stop(){
-	m_targetingOn = false;
-}
-
 void Targeting::runTargeting()
 {
 	while(true){
-		if(m_targetingOn){
-			//Update the source and filter the image each frame
-			updateSource();
-			m_filteredFrame = filterImage(m_sourceFrame);
-			m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
-			ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
-			float gv = 255;
-			PixelValue pv;
-			pv.grayscale = gv;
+		//Update the source and filter the image each frame
+		updateSource();
+		m_filteredFrame = filterImage(m_sourceFrame);
+		m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
+		ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
+		float gv = 255;
+		PixelValue pv;
+		pv.grayscale = gv;
 
-			imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
+		imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
 
-			CameraServer::GetInstance()->SetImage(output->GetImaqImage());
-			//Find the total percent of the image which is occupied by the target color (green)
-			double total = 0;
+		CameraServer::GetInstance()->SetImage(output->GetImaqImage());
+		//Find the total percent of the image which is occupied by the target color (green)
+		double total = 0;
 
-			for(int i=0;i<m_filteredFrame->GetNumberParticles();i++){
-				total += m_filteredFrame->GetParticleAnalysisReport(i).particleToImagePercent;
-			}
-
-			std::cout << "Total: " << total << "\n";
-
-			delete m_filteredFrame;
+		for(int i=0;i<m_filteredFrame->GetNumberParticles();i++){
+			total += m_filteredFrame->GetParticleAnalysisReport(i).particleToImagePercent;
 		}
+
+		std::cout << "Total: " << total << "\n";
+
+		delete m_filteredFrame;
+		delete output;
+
+		Wait(0.05);
 	}
 }
