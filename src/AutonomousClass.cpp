@@ -14,8 +14,8 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
         m_position_yRotate(0.0f),
         m_currentPosition(0.0f),
         m_finalPosition(0.0f),
-        m_desiredMoveAngle(0.0),
         m_time(0.0f),
+        m_desiredMoveAngle(0.0),
         m_atPosition(false),
         m_driveTrain(driveTrain),
         m_gyro(gyro),
@@ -72,11 +72,11 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
        distanceCalculate(m_desiredMoveAngle);
        //if the robot is not 80% of the way to the target location, increase speed to 1
        if (m_currentPosition / m_finalPosition < .8){
-           speed = 0.3;
+           speed = 0.6;
        }
        //if the robot is more than 90% and less than 95% to the target location go at half speed
        else if (m_currentPosition/m_finalPosition > .9 && m_currentPosition/m_finalPosition < .95){
-           speed = 0.25;
+           speed = 0.3;
        }
        // adjust the angle based on calculated distance
        adjustedMoveAngle = m_desiredMoveAngle + (m_desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
