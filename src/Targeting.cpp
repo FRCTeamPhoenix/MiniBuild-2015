@@ -22,12 +22,12 @@ void Targeting::updateSource()
 
 BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 {
-      //This should threshold for the green that was on Ben's shirt that night (roughly green, tweak this before testing)
-    BinaryImage* i1 = inputImage->ThresholdHSL(0,360,0,30,0,30);
-    BinaryImage* i2 = inputImage->ThresholdHSL(0,360,0,30,55,75);
-    BinaryImage* i3 = inputImage->ThresholdHSL(0,0,0,0,0,0);
-    imaqAdd(i3->GetImaqImage(), i1->GetImaqImage(), i2->GetImaqImage());
-    return i3;
+	//This should threshold for the green that was on Ben's shirt that night (roughly green, tweak this before testing)
+	BinaryImage* inputOne = inputImage->ThresholdHSL(0,360,0,30,0,30);
+	BinaryImage* inputTwo = inputImage->ThresholdHSL(0,360,0,30,55,75);
+	BinaryImage* result = inputImage->ThresholdHSL(0,0,0,0,0,0);
+	imaqAdd(result->GetImaqImage(), inputOne->GetImaqImage(), inputTwo->GetImaqImage());
+	return result;
 }
 
 void Targeting::runTargeting()
