@@ -79,7 +79,7 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
            speed = 0.3;
        }
        // adjust the angle based on calculated distance
-       adjustedMoveAngle = m_desiredMoveAngle + (m_desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
+       adjustedMoveAngle = m_desiredMoveAngle + (m_desiredMoveAngle - atan2(m_position_yRotate, m_position_xRotate) * AutoConstants::radToDegree - 45);
        rotateAdjust = -(((m_gyro->GetAngle()))/360); //mod rotation by 360 degrees
        m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle, rotateAdjust);//drive
        Wait(.005);
