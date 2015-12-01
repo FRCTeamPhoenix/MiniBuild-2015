@@ -79,17 +79,17 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
        //update the encoder!
        updateEncoder();
        //calculate rotated polar distance
-       distanceCalculate(m_desiredMoveAngle);
+       distanceCalculate();
        //if the robot is not 80% of the way to the target location, increase speed to 1
        if (m_currentPosition / m_finalPosition < .8){
-           speed = 0.3;
+           speed = 0.6;
        }
        //if the robot is more than 90% and less than 95% to the target location go at half speed
        else if (m_currentPosition/m_finalPosition > .9 && m_currentPosition/m_finalPosition < .95){
-           speed = 0.25;
+           speed = 0.3;
        }
        // adjust the angle based on calculated distance
-       adjustedMoveAngle = m_desiredMoveAngle + (m_desiredMoveAngle - (atan2(m_position_yRotate, m_position_xRotate) - 45) * AutoConstants::radToDegree);
+       adjustedMoveAngle = (m_desiredMoveAngle + m_desiredMoveAngle - atan2(m_position_yRotate, m_position_xRotate) ) * AutoConstants::radToDegree - 45;
        rotateAdjust = -(((m_gyro->GetAngle()))/360); //mod rotation by 360 degrees
        m_driveTrain->MecanumDrive_Polar(speed, adjustedMoveAngle, rotateAdjust);//drive
        Wait(.005);
@@ -114,9 +114,11 @@ void AutonomousClass::resetEncoder(){
        }
 }
 //Calculate new position based on move angle
-void AutonomousClass::distanceCalculate(int desiredMoveAngle){
+
+void AutonomousClass::distanceCalculate(){
     m_position_xRotate = (encoderTicks[RF]+encoderTicks[LR])/2;
     m_position_yRotate = (encoderTicks[LF]+encoderTicks[RR])/2;
+
 
     m_currentPosition = sqrt((m_position_yRotate * m_position_yRotate) + ( m_position_xRotate * m_position_xRotate));
 }

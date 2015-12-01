@@ -19,7 +19,7 @@ public:
     //main auto drive mode
     void automode1();
     //Calculate new position based on move angle
-    void distanceCalculate(int desiredMoveAngle);
+    void distanceCalculate();
     //forward drive
     void automode2();
     //drive left
