@@ -37,7 +37,7 @@ public:
 	void OperatorControl()
 	{
 		driveTrain.SetSafetyEnabled(false);
-		std::thread targetingThread([this]{targeting.runTargeting();});
+		std::thread targetingThread([this]{while (IsOperatorControl() && IsEnabled()) targeting.runTargeting();});
 		targetingThread.detach();
 		while (IsOperatorControl() && IsEnabled())
 		{

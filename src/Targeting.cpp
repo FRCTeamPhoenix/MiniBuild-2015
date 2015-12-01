@@ -32,24 +32,22 @@ BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 
 void Targeting::runTargeting()
 {
-	while(true){
-		//Update the source and filter the image each frame
-		updateSource();
+        //Update the source and filter the image each frame
+        updateSource();
 
-		m_filteredFrame = filterImage(m_sourceFrame);
-		m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
-		ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
-		float gv = 255;
-		PixelValue pv;
-		pv.grayscale = gv;
+        m_filteredFrame = filterImage(m_sourceFrame);
+        m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
+        ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
+        float gv = 255;
+        PixelValue pv;
+        pv.grayscale = gv;
 
-		imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
+        imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
 
-		m_cameraServer->SetImage(output->GetImaqImage());
+        m_cameraServer->SetImage(output->GetImaqImage());
 
-		delete m_filteredFrame;
-		delete output;
+        delete m_filteredFrame;
+        delete output;
 
-		Wait(0.005);
-	}
+        Wait(0.005);
 }
