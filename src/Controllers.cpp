@@ -66,7 +66,7 @@ float Controllers::GetStickX() {
 	if (fabs(m_stick->GetX()) <= controlsConstants::joystickDeadZone) {
 		return 0.0f;
 	} else {
-		return m_stick->GetX() / 5;
+		return m_stick->GetX() * GetStickThrottle();
 	}
 }
 
@@ -74,7 +74,7 @@ float Controllers::GetStickY() {
 	if (fabs(m_stick->GetY()) <= controlsConstants::joystickDeadZone) {
 		return 0.0f;
 	} else {
-		return m_stick->GetY() / 5;
+		return m_stick->GetY() * GetStickThrottle();
 	}
 }
 
@@ -83,8 +83,17 @@ float Controllers::GetStickZ() {
 	if (fabs(m_stick->GetZ()) <= controlsConstants::joystickDeadZone) {
 		return 0.0f;
 	} else {
-		return m_stick->GetZ() / 10;
+		return m_stick->GetZ() * GetStickThrottle();
 	}
+}
+
+float Controllers::GetStickThrottle() {
+   float throttleValue = m_stick->GetThrottle();
+   if(throttleValue >= 0.6) {
+      return 0.1;
+   } else {
+      return -0.25 * (throttleValue - 1);
+   }
 }
 
 

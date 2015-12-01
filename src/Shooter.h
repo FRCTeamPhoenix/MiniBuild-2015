@@ -16,24 +16,24 @@ class Shooter {
 private:
    Encoder* m_encoder;
    Talon* m_magazineMotor;
-   Talon* m_flywheelMotorRight;
-   Talon* m_flywheelMotorLeft;
+   Talon* m_flywheelMotor;
    Controllers* m_controllers;
 
+public:
    void loadBall();
-   void checkLoader();
    void fireBall();
-   void checkButton();
 
    int ticks = 0;
 
    Shooter(
          Encoder* encoder,
          Talon* magazineMotor,
-         Talon* flywheelMotorRight,
-         Talon* flywheelMotorLeft,
+         Talon* flywheelMotor,
          Controllers* controllers);
    virtual ~Shooter();
+public:
+   void checkButton();
+   void checkLoader();
 };
 
 #endif /* SRC_SHOOTER_H_ */

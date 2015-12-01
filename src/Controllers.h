@@ -25,6 +25,8 @@ public:
 	float GetStickY();
 	float GetStickZ();
 
+	float GetStickThrottle();
+
 	float GetTwistFromSmallJoystick();
 	void rumble();
 

@@ -10,13 +10,28 @@
 #include "WPILib.h"
 
 struct Port{
-// Channels for the wheels
+// Channels for wheels
    const static uint32_t frontLeftChannel   = 1;
    const static uint32_t rearLeftChannel    = 0;
    const static uint32_t frontRightChannel  = 2;
    const static uint32_t rearRightChannel   = 3;
+
+//Channels for encoders
+   const static uint32_t firstEncoderChannel = 20; //placeholder value
+   const static uint32_t secondEncoderChannel = 21; //placeholder
+
+//Controller channels
    const static uint32_t joystickChannel     = 0;
    const static uint32_t gamepadChannel = 1; // placeholder value
+
+//Shooter channels
+   const static uint32_t magazineChannel = 6; //placeholder
+   const static uint32_t flywheelChannel = 5; // placeholder
+
+//Loader channels
+   const static uint32_t loaderChannel = 4; //placeholder
+   const static uint32_t digitalInputChannel = 13; //placeholder
+
 };
 
 struct TeleConstants{

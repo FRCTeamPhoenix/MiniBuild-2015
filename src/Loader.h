@@ -19,14 +19,14 @@ private:
 
    void startLoader();
    void stopLoader();
-   void updateLoader();
 
+public:
 	Loader(
 	      Talon* loadMotor,
 	      Controllers* controllers,
 	      DigitalInput* limitSwitch);
-public:
 	virtual ~Loader();
+	void updateLoader();
 };
 
 #endif /* SRC_LOADER_H_ */
