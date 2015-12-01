@@ -67,7 +67,7 @@ public:
 
    void Autonomous()
      {
-        driveTrain.SetSafetyEnabled(false);
+         driveTrain.SetSafetyEnabled(false);
 
           autoClass.automode1();
           printf("%2.5f x direction \n",accelerometer.GetX());
