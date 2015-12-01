@@ -1,5 +1,6 @@
 #include "Targeting.h"
 #include "WPILib.h"
+#include <cmath>
 
 Targeting::Targeting()
 {
@@ -18,6 +19,14 @@ void Targeting::setupCameraServer(CameraServer* cameraServer){
 void Targeting::updateSource()
 {
 	m_camera->GetImage(m_sourceFrame);
+}
+
+bool Targeting::targetSighted()
+{
+        double center = m_filteredFrame->GetOrderedParticleAnalysisReports()[0][0].center_mass_x;
+        double screenCenter = CameraRes::x / 2;
+        double tolerance = m_filteredFrame->GetOrderedParticleAnalysisReports()[0][0].boundingRect.width / 2;
+        return std::abs(center - screenCenter) <= tolerance;
 }
 
 BinaryImage* Targeting::filterImage(ColorImage* inputImage)

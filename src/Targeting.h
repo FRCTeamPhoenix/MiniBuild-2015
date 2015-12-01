@@ -16,6 +16,7 @@ public:
 	BinaryImage* filterImage(ColorImage* inputImage);
 	void setupCamera(AxisCamera* camera);
 	void setupCameraServer(CameraServer * cameraServer);
+	bool targetSighted();
 private:
 	ColorImage *m_sourceFrame;
 	BinaryImage *m_filteredFrame;

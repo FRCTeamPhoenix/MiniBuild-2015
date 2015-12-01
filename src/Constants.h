@@ -19,6 +19,11 @@ struct Port{
    const static uint32_t joystickChannel     = 0;
 };
 
+struct CameraRes{
+   const static uint32_t x                  = 480;
+   const static uint32_t y                  = 320;
+};
+
 static std::string cameraIP = "10.0.42.20";
 
 #endif /* SRC_CONSTANTS_H_ */
