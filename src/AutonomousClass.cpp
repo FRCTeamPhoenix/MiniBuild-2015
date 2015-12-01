@@ -14,8 +14,8 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
         m_position_yRotate(0.0f),
         m_currentPosition(0.0f),
         m_finalPosition(0.0f),
-        m_desiredMoveAngle(0.0),
         m_time(0.0f),
+        m_desiredMoveAngle(0.0),
         m_atPosition(false),
         m_driveTrain(driveTrain),
         m_gyro(gyro),
@@ -47,6 +47,16 @@ AutonomousClass::AutonomousClass(DriveTrain * driveTrain, Encoder * frontLeft, E
        oldEncoderTicks[LF]=0;
        oldEncoderTicks[LR]=0;
        oldEncoderTicks[RR]=0;
+
+       m_ticksPerInch[RF] = AutoConstants::ticksPerInchRF;
+       m_ticksPerInch[LF] = AutoConstants::ticksPerInchLF;
+       m_ticksPerInch[LR] = AutoConstants::ticksPerInchLR;
+       m_ticksPerInch[RR] = AutoConstants::ticksPerInchRR;
+
+
+
+
+
 }
 
 //moves to desired position
@@ -92,7 +102,7 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
 void AutonomousClass::updateEncoder(){
    //This loops over each wheel
     for (int i = RF; i <= RR; i++){
-        encoderTicks[i] = wheelEncoders[i]->Get()-oldEncoderTicks[i];
+        encoderTicks[i] = ((wheelEncoders[i]->Get())/m_ticksPerInch[i])-oldEncoderTicks[i];
     }
 }
 
@@ -105,8 +115,8 @@ void AutonomousClass::resetEncoder(){
 }
 //Calculate new position based on move angle
 void AutonomousClass::distanceCalculate(int desiredMoveAngle){
-    m_position_xRotate = ((encoderTicks[RF]+encoderTicks[LR])/2)/AutoConstants::ticksPerInch;
-    m_position_yRotate = ((encoderTicks[LF]+encoderTicks[RR])/2)/AutoConstants::ticksPerInch;
+    m_position_xRotate = (encoderTicks[RF]+encoderTicks[LR])/2;
+    m_position_yRotate = (encoderTicks[LF]+encoderTicks[RR])/2;
 
     m_currentPosition = sqrt((m_position_yRotate * m_position_yRotate) + ( m_position_xRotate * m_position_xRotate));
 }

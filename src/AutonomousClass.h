@@ -55,12 +55,7 @@ public:
     bool m_atPosition;
 
     //here are all the pointers to hardware elements
-    Timer * m_timer;
     DriveTrain * m_driveTrain;
-    /*Encoder * RFEncoder;
-    Encoder * LFEncoder;
-    Encoder * LREncoder;
-    Encoder * RREncoder;*/
     Gyro * m_gyro;
 
     //and an array used to iterate over the encoders
@@ -69,6 +64,7 @@ public:
     //more arrays used to iterate over current and relative encoder ticks
     int encoderTicks[4];
     int oldEncoderTicks[4];
+    double m_ticksPerInch[4];
 
     //adjusted angle of movement and rotation
     int adjustedMoveAngle;

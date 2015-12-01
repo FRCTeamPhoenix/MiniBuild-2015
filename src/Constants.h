@@ -33,17 +33,30 @@ struct Port{
 
 
 };
+
 struct AutoConstants{
-    //ticks per rotation of the encoder
-    static const int ticks=2048;
+    //ticks per rotation of the encoder per each encoder
+
+
+    static const int RFTicks = 800;
+    static const int LFTicks = 512; //could be 500
+    static const int RRTicks = 512; //could be 500
+    static const int LRTicks = 0; //unknown - encoder broken
+     //the circumfrence of the whell in inches
+    static constexpr double wheelCircumfrence=12.56;
     //the number of ticks in one inch
-    static constexpr double ticksPerInch=ticks/12.56;
+    static constexpr double ticksPerInchRF=RFTicks/wheelCircumfrence;
+    static constexpr double ticksPerInchLF=LFTicks/wheelCircumfrence;
+    static constexpr double ticksPerInchRR=RRTicks/wheelCircumfrence;
+    static constexpr double ticksPerInchLR=LRTicks/wheelCircumfrence;
+
     //radians to degrees 180/pi
     static constexpr double radToDegree = 57.3248f;
     //move speed for auto, TODO tune this
     static constexpr double autoMoveSpeed =.2f;
     //distance from final position that we need
     static constexpr double finalPositionTolerance = 1;
+
 
 
 };

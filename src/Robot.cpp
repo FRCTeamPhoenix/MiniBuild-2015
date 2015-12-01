@@ -70,8 +70,8 @@ public:
         driveTrain.SetSafetyEnabled(false);
 
           autoClass.automode1();
-          printf("%2.5f x direction \n",accelerometer.GetX());
-          printf("%2.5f y direction \n",accelerometer.GetY());
+          //printf("%2.5f x direction \n",accelerometer.GetX());
+          //printf("%2.5f y direction \n",accelerometer.GetY());
 
      }
 
