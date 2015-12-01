@@ -69,7 +69,7 @@ void AutonomousClass::autoMove(int desiredx, int desiredy, double maxTime){
        //update the encoder!
        updateEncoder();
        //calculate rotated polar distance
-       distanceCalculate(m_desiredMoveAngle);
+       distanceCalculate();
        //if the robot is not 80% of the way to the target location, increase speed to 1
        if (m_currentPosition / m_finalPosition < .8){
            speed = 0.6;
@@ -104,7 +104,7 @@ void AutonomousClass::resetEncoder(){
        }
 }
 //Calculate new position based on move angle
-void AutonomousClass::distanceCalculate(int desiredMoveAngle){
+void AutonomousClass::distanceCalculate(){
     m_position_xRotate = ((encoderTicks[RF]+encoderTicks[LR])/2)/AutoConstants::ticksPerInch;
     m_position_yRotate = ((encoderTicks[LF]+encoderTicks[RR])/2)/AutoConstants::ticksPerInch;
 
