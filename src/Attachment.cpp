@@ -16,6 +16,7 @@ Attachment::Attachment(
 
 }
 
+// Checks all shooter/loader buttons and takes the necessary action(s)
 void Attachment::checkAllButtons() {
    m_shooter->checkButton();
    m_shooter->checkLoader();

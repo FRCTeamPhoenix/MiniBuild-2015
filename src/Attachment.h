@@ -5,6 +5,12 @@
  *      Author: Rose
  */
 
+/*
+ * This class was created to facilitate the checking/updating
+ * of buttons controlling shooter and loader operation, particularly
+ * during teleoperated mode.
+ */
+
 #ifndef SRC_ATTACHMENT_H_
 #define SRC_ATTACHMENT_H_
 #include "Shooter.h"

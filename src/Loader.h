@@ -5,6 +5,7 @@
  *      Author: Brin Harper
  */
 
+
 #ifndef SRC_LOADER_H_
 #define SRC_LOADER_H_
 #include "WPILib.h"
@@ -19,6 +20,7 @@ private:
 
    void startLoader();
    void stopLoader();
+   int counter;
 
 public:
 	Loader(

@@ -25,11 +25,11 @@ struct Port{
    const static uint32_t gamepadChannel = 1; // placeholder value
 
 //Shooter channels
-   const static uint32_t magazineChannel = 6; //placeholder
-   const static uint32_t flywheelChannel = 5; // placeholder
+   const static uint32_t magazineChannel = 6;
+   const static uint32_t flywheelChannel = 5;
 
 //Loader channels
-   const static uint32_t loaderChannel = 4; //placeholder
+   const static uint32_t loaderChannel = 4;
    const static uint32_t digitalInputChannel = 13; //placeholder
 
 };
@@ -44,6 +44,10 @@ struct TeleConstants{
    //Loader Constants
    static constexpr float loaderMotorSpeed = 1;
    static constexpr float motorRunTimeLoader = 5;
+   // Number of seconds the loader motor has been running
+   static const int seconds = 5;
+   // Set number describing times updateLoader is checked per second
+   static const int ticksPerSecond = 200;
 };
 
 enum buttonNames {
