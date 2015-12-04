@@ -21,7 +21,8 @@ Loader::Loader(
 }
 
    void Loader::startLoader(){
-      m_loadMotor->Set(TeleConstants::loaderMotorSpeed);
+      m_loadMotor->Set(1);
+      //TeleConstants::loaderMotorSpeed
    }
 
    void Loader::stopLoader(){
@@ -43,8 +44,7 @@ Loader::Loader(
       // This evaluates an OR statement; therefore the inclusion of a check
       // to see if the limit switch has been hit should not cause a problem,
       // even if we don't end up using a limit switch
-      if (m_controllers->GetGamepadButton(driveButtons::stopLoaderMotor) || m_limitSwitch->Get()
-    		  || counter <= 0){
+      if (m_controllers->GetGamepadButton(driveButtons::stopLoaderMotor)){
          stopLoader();
       }
    }

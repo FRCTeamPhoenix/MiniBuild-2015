@@ -24,8 +24,9 @@ Shooter::Shooter(
 }
    //Function for loading the ball into the shooter
    void Shooter::loadBall(){
-      ticks = m_encoder->Get();
+      //ticks = m_encoder->Get();
       m_magazineMotor->Set(-(TeleConstants::magazineMotorSpeed));
+      Wait(TeleConstants::motorRunTimeMagazine);
    }
    //Function for making the flywheel motors spin
    void Shooter::fireBall(){

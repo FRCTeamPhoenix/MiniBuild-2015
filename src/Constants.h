@@ -40,6 +40,7 @@ struct TeleConstants{
    static constexpr float magazineMotorSpeed = 0.5;
    static const int magazineMotorTicksPerRotation = 512;
    static constexpr float motorRunTimeShooter = 3;
+   static constexpr float motorRunTimeMagazine = 3;
 
    //Loader Constants
    static constexpr float loaderMotorSpeed = 1;
