@@ -63,6 +63,15 @@ void Targeting::runTargeting()
 
         m_cameraServer->SetImage(output->GetImaqImage());
 
+        std::string out = "";
+        if(targetSighted()){
+        	out += "Target Sighted";
+        }
+        else {
+        	out += "Target NOT Sighted";
+        }
+        SmartDashboard::PutString("DB/String 0", out);
+
         delete m_filteredFrame;
         delete output;
 

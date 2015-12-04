@@ -20,8 +20,8 @@ struct Port{
 };
 
 struct CameraRes{
-   const static uint32_t x                  = 480;
-   const static uint32_t y                  = 320;
+   const static uint32_t x                  = 320;
+   const static uint32_t y                  = 240;
 };
 
 static std::string cameraIP = "10.0.42.20";

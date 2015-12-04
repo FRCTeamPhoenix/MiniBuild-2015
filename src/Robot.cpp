@@ -30,6 +30,7 @@ public:
 		camera->WriteResolution(camera->kResolution_320x240);
 		targeting.setupCamera(camera);
 		targeting.setupCameraServer(CameraServer::GetInstance());
+		SmartDashboard::init();
 }
 
 	/**
