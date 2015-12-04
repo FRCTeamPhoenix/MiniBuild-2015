@@ -117,7 +117,7 @@ void AutonomousClass::resetEncoder(){
 
 void AutonomousClass::distanceCalculate(){
     m_position_xRotate = (encoderTicks[RF]+encoderTicks[LR])/2;
-    m_position_yRotate = (encoderTicks[LF]+encoderTicks[RR])/2;
+    m_position_yRotate = (-encoderTicks[LF])/2;
 
 
     m_currentPosition = sqrt((m_position_yRotate * m_position_yRotate) + ( m_position_xRotate * m_position_xRotate));
