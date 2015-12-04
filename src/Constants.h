@@ -1,3 +1,4 @@
+
 /*
  * Constants.h
  *
@@ -15,8 +16,8 @@ struct Port{
     static const uint32_t rearLeftChannel    = 0;
     static const uint32_t frontRightChannel  = 2;
     static const uint32_t rearRightChannel   = 3;
-
-   const static uint32_t joystickChannel     = 0;
+    const static uint32_t gamepadChannel = 0; // placeholder value
+    const static uint32_t joystickChannel     = 1;
 
    //encoder ports
    static const uint32_t LeftRearDriveEncoderChannelA = 0;
@@ -32,6 +33,27 @@ struct Port{
 
 
 
+};
+struct TeleConstants{
+   static constexpr float flywheelSpeed = 1;
+   static constexpr float magazineMotorSpeed = 0.5;
+   static const int magazineMotorTicksPerRotation = 512;
+   static constexpr float motorRunTime = 3;
+};
+
+enum buttonNames {
+    buttonX = 1,
+    buttonA = 2,
+    buttonB = 3,
+    buttonY = 4,
+    buttonLB = 5,
+    buttonRB = 6,
+    triggerLT = 7,
+    triggerRT = 8,
+    buttonBack = 9,
+    buttonStart = 10,
+    joystickLeftButton = 11,
+    joystickRightButton = 12
 };
 
 struct AutoConstants{

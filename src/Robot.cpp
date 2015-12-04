@@ -1,4 +1,5 @@
 
+#include "Controllers.h"
 #include "WPILib.h"
 #include "DriveTrain.h"
 #include "Constants.h"
@@ -12,7 +13,7 @@ class Robot: public SampleRobot
    // robot drive system
    DriveTrain driveTrain;
    // only joystick
-   Joystick stick;
+   Joystick m_stick;
 
    BuiltInAccelerometer accelerometer;
 
@@ -22,6 +23,8 @@ class Robot: public SampleRobot
    Encoder m_rightFrontDriveEncoder;
    Encoder m_rightRearDriveEncoder;
    Gyro m_gyro;
+   Joystick m_gamepad;
+   Controllers m_controller;
 
    AutonomousClass autoClass;
 
@@ -30,7 +33,7 @@ public:
       // these must be initialized in the same order
       driveTrain(),
       // as they are declared above.
-      stick(Port::joystickChannel),
+      m_stick(Port::joystickChannel),
 	  accelerometer(),
 
       m_leftRearDriveEncoder(Port::LeftRearDriveEncoderChannelA, Port::LeftRearDriveEncoderChannelB),
@@ -38,6 +41,8 @@ public:
       m_rightFrontDriveEncoder(Port::RightFrontDriveEncoderChannelA, Port::RightFrontDriveEncoderChannelB),
       m_rightRearDriveEncoder(Port::RightRearDriveEncoderChannelA, Port::RightRearDriveEncoderChannelB),
       m_gyro(Port::gyroChannel),
+      m_gamepad(Port::gamepadChannel),
+      m_controller(&m_stick, &m_gamepad),
       autoClass(&driveTrain,&m_leftFrontDriveEncoder,&m_rightFrontDriveEncoder,&m_leftRearDriveEncoder,&m_rightRearDriveEncoder,&m_gyro)
 
    {
@@ -56,12 +61,12 @@ public:
       driveTrain.SetSafetyEnabled(false);
       while (IsOperatorControl() && IsEnabled())
       {
-         // Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
-         // This sample does not use field-oriented drive, so the gyro input is set to zero.
-         driveTrain.MecanumDrive_Cartesian(stick.GetX(), stick.GetY(), stick.GetZ());
+          // Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
+          // This sample does not use field-oriented drive, so the gyro input is set to zero.
+          // TODO change stick to m_controller
+          //driveTrain.MecanumDrive_Cartesian(stick.GetX(), stick.GetY(), stick.GetZ());
 
          // wait 5ms to avoid hogging CPU cycles
-         Wait(0.005);
       }
    }
 
@@ -79,4 +84,4 @@ public:
 
 };
 
-START_ROBOT_CLASS(Robot);
+
