@@ -7,6 +7,7 @@ Targeting::Targeting()
 {
 	m_sourceFrame = new ColorImage(IMAQ_IMAGE_RGB);
 	m_filteredFrame = new BinaryImage();
+	m_camera = new AxisCamera(0);
 }
 
 void Targeting::setupCamera(AxisCamera* camera){
@@ -33,8 +34,7 @@ bool Targeting::targetSighted()
 BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 {
 	//This should threshold for the green that was on Ben's shirt that night (roughly green, tweak this before testing)
-	BinaryImage* result = inputImage->ThresholdHSL(0,255,0,255,210,255);
-	return result;
+	return inputImage->ThresholdHSL(0,255,0,255,210,255);
 }
 
 void Targeting::runTargeting()
