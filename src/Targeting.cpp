@@ -1,5 +1,6 @@
 #include "Targeting.h"
 #include "WPILib.h"
+#include "Constants.h"
 #include <cmath>
 
 Targeting::Targeting()
@@ -32,10 +33,7 @@ bool Targeting::targetSighted()
 BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 {
 	//This should threshold for the green that was on Ben's shirt that night (roughly green, tweak this before testing)
-	BinaryImage* inputOne = inputImage->ThresholdHSL(0,360,0,30,0,30);
-	BinaryImage* inputTwo = inputImage->ThresholdHSL(0,360,0,30,55,75);
-	BinaryImage* result = inputImage->ThresholdHSL(0,0,0,0,0,0);
-	imaqAdd(result->GetImaqImage(), inputOne->GetImaqImage(), inputTwo->GetImaqImage());
+	BinaryImage* result = inputImage->ThresholdHSL(0,255,0,255,210,255);
 	return result;
 }
 
@@ -45,13 +43,23 @@ void Targeting::runTargeting()
         updateSource();
 
         m_filteredFrame = filterImage(m_sourceFrame);
-        m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
+        //m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
         ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
         float gv = 255;
         PixelValue pv;
         pv.grayscale = gv;
 
         imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
+
+        Rect rectangle = m_filteredFrame->GetOrderedParticleAnalysisReports()[0][0].boundingRect;
+
+        imaqDrawShapeOnImage(
+              output->GetImaqImage(),
+              output->GetImaqImage(),
+              rectangle,
+              DrawMode::IMAQ_DRAW_VALUE,
+              ShapeMode::IMAQ_SHAPE_RECT,
+              255);
 
         m_cameraServer->SetImage(output->GetImaqImage());
 

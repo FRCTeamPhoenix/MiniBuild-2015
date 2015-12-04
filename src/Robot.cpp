@@ -27,6 +27,7 @@ public:
 		// you may need to change or remove this to match your robot
 		driveTrain.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);
 		camera = new AxisCamera(cameraIP);
+		camera->WriteResolution(camera->kResolution_320x240);
 		targeting.setupCamera(camera);
 		targeting.setupCameraServer(CameraServer::GetInstance());
 }
