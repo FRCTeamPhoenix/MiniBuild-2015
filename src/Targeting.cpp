@@ -38,6 +38,7 @@ BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 
 void Targeting::runTargeting()
 {
+		return;
         //Update the source and filter the image each frame
         updateSource();
 

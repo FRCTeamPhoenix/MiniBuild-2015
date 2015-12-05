@@ -3,6 +3,11 @@
 #include "Targeting.h"
 #include "DriveTrain.h"
 #include "Constants.h"
+
+class Robot;
+
+void targetingThread(Robot* master, Targeting* targeting);
+
 /**
  * This is a demo program showing how to use Mecanum control with the driveTrain class.
  */
@@ -39,8 +44,7 @@ public:
 	void OperatorControl()
 	{
 		driveTrain.SetSafetyEnabled(false);
-		std::thread targetingThread([this]{while (IsOperatorControl() && IsEnabled()) targeting.runTargeting();});
-		targetingThread.detach();
+		std::thread targetingThreadInstance(targetingThread, this, &targeting);
 		while (IsOperatorControl() && IsEnabled())
 		{
 			// Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
@@ -50,7 +54,14 @@ public:
 			// wait 5ms to avoid hogging CPU cycles
 			Wait(0.005);
 		}
+		targetingThreadInstance.join();
 	}
 };
+
+void targetingThread(Robot* master, Targeting* targeting){
+	while(master->IsOperatorControl() && master->IsEnabled()){
+		targeting->runTargeting();
+	}
+}
 
 START_ROBOT_CLASS(Robot);
