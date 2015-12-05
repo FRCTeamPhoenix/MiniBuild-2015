@@ -22,7 +22,7 @@ void Targeting::updateSource()
 	m_camera->GetImage(m_sourceFrame);
 }
 
-bool Targeting::targetSighted(std::vector<ParticleAnalysisReport>* reports)
+bool Targeting::targetInRange(std::vector<ParticleAnalysisReport>* reports)
 {
         double center = reports[0][0].center_mass_x;
         double screenCenter = CameraRes::x / 2;
@@ -68,7 +68,7 @@ void Targeting::runTargeting()
 			m_cameraServer->SetImage(output->GetImaqImage());
 
 			std::string out = "Target ";
-			if(targetSighted(reports)){
+			if(targetInRange(reports)){
 				out += "Sighted";
 			}
 			else {
