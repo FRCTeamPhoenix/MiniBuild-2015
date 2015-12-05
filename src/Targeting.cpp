@@ -22,11 +22,11 @@ void Targeting::updateSource()
 	m_camera->GetImage(m_sourceFrame);
 }
 
-bool Targeting::targetSighted()
+bool Targeting::targetSighted(std::vector<ParticleAnalysisReport>* reports)
 {
-        double center = m_filteredFrame->GetOrderedParticleAnalysisReports()[0][0].center_mass_x;
+        double center = reports[0][0].center_mass_x;
         double screenCenter = CameraRes::x / 2;
-        double tolerance = m_filteredFrame->GetOrderedParticleAnalysisReports()[0][0].boundingRect.width / 2;
+        double tolerance = reports[0][0].boundingRect.width / 2;
         return std::abs(center - screenCenter) <= tolerance;
 }
 
@@ -38,7 +38,6 @@ BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 
 void Targeting::runTargeting()
 {
-		printf("Targeting top\n");
         //Update the source and filter the image each frame
         updateSource();
 
@@ -50,35 +49,35 @@ void Targeting::runTargeting()
         float gv = 255;
         PixelValue pv;
         pv.grayscale = gv;
-#ifdef LATER
+
         imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
 
-        Rect rectangle = m_filteredFrame->GetOrderedParticleAnalysisReports()[0][0].boundingRect;
+    	std::vector<ParticleAnalysisReport>* reports = m_filteredFrame->GetOrderedParticleAnalysisReports();
+        if(reports->size()){
+        	//TODO: We really hope if we get a report there's gonna be at least one rectangle
+			Rect rectangle = reports[0][0].boundingRect;
 
-        imaqDrawShapeOnImage(
-              output->GetImaqImage(),
-              output->GetImaqImage(),
-              rectangle,
-              DrawMode::IMAQ_DRAW_VALUE,
-              ShapeMode::IMAQ_SHAPE_RECT,
-              255);
+			imaqDrawShapeOnImage(
+				  output->GetImaqImage(),
+				  output->GetImaqImage(),
+				  rectangle,
+				  DrawMode::IMAQ_DRAW_VALUE,
+				  ShapeMode::IMAQ_SHAPE_RECT,
+				  255);
 
-        m_cameraServer->SetImage(output->GetImaqImage());
+			m_cameraServer->SetImage(output->GetImaqImage());
 
-        std::string out = "Target ";
-        if(targetSighted()){
-        	out += "Sighted";
+			std::string out = "Target ";
+			if(targetSighted(reports)){
+				out += "Sighted";
+			}
+			else {
+				out += "NOT Sighted";
+			}
+			SmartDashboard::PutString("DB/String 0", out);
         }
-        else {
-        	out += "NOT Sighted";
-        }
-        SmartDashboard::PutString("DB/String 0", out);
-
-#endif
 
         delete output;
 
-        printf("Targeting Bottom\n");
-
-        Wait(0.005);
+        Wait(0.01);
 }
