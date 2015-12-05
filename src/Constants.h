@@ -10,13 +10,76 @@
 #include "WPILib.h"
 
 struct Port{
-// Channels for the wheels
-   const static uint32_t frontLeftChannel   = 2;
-   const static uint32_t rearLeftChannel    = 3;
-   const static uint32_t frontRightChannel  = 1;
-   const static uint32_t rearRightChannel   = 0;
+// Channels for wheels
+   const static uint32_t frontLeftChannel   = 1;
+   const static uint32_t rearLeftChannel    = 0;
+   const static uint32_t frontRightChannel  = 2;
+   const static uint32_t rearRightChannel   = 3;
 
+//Channels for encoders
+   const static uint32_t firstEncoderChannel = 20; //placeholder value
+   const static uint32_t secondEncoderChannel = 21; //placeholder
+
+//Controller channels
    const static uint32_t joystickChannel     = 0;
+   const static uint32_t gamepadChannel = 1; // placeholder value
+
+//Shooter channels
+   const static uint32_t magazineChannel = 6;
+   const static uint32_t flywheelChannel = 5;
+
+//Loader channels
+   const static uint32_t loaderChannel = 4;
+   const static uint32_t digitalInputChannel = 13; //placeholder
+
+};
+
+struct TeleConstants{
+   //Shooter Constants
+   static constexpr float flywheelSpeed = 1;
+   static constexpr float magazineMotorSpeed = 0.5;
+   static const int magazineMotorTicksPerRotation = 512;
+   static constexpr float motorRunTimeShooter = 3;
+   static constexpr float motorRunTimeMagazine = 3;
+
+   //Loader Constants
+   static constexpr float loaderMotorSpeed = 1;
+   static constexpr float motorRunTimeLoader = 5;
+   // Number of seconds the loader motor has been running
+   static const int seconds = 5;
+   // Set number describing times updateLoader is checked per second
+   static const int ticksPerSecond = 200;
+};
+
+enum buttonNames {
+        buttonX = 1,
+        buttonA = 2,
+        buttonB = 3,
+        buttonY = 4,
+        buttonLB = 5,
+        buttonRB = 6,
+        triggerLT = 7,
+        triggerRT = 8,
+        buttonBack = 9,
+        buttonStart = 10,
+        joystickLeftButton = 11,
+        joystickRightButton = 12
+};
+
+struct driveButtons{
+   //Buttons for shooter
+   static const int loadButton = buttonA;
+   static const int fireButton = buttonB;
+   //Buttons for loader
+   static const int runLoaderMotor = buttonX;
+   static const int stopLoaderMotor = buttonY;
+
+};
+
+struct controlsConstants{
+   static constexpr float joystickDeadZone = 0.1;
+
+   static constexpr float gamepadDeadZone = 0.1;
 };
 
 struct CameraRes{

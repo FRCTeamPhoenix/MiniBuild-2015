@@ -2,7 +2,9 @@
 #include "WPILib.h"
 #include "Targeting.h"
 #include "DriveTrain.h"
+#include "Controllers.h"
 #include "Constants.h"
+#include "Attachment.h"
 
 class Robot;
 
@@ -13,25 +15,44 @@ void targetingThread(Robot* master, Targeting* targeting);
  */
 class Robot: public SampleRobot
 {   // robot drive system
-	DriveTrain driveTrain;
-	// only joystick
-	Joystick stick;
+	DriveTrain m_driveTrain;
+    // only joystick
+    Joystick m_stick;
+    Joystick m_gamepad;
+    Controllers m_controller;
+    Encoder m_shooterEncoder;
+    Talon m_magazineMotor;
+    Talon m_flywheelMotor;
+    Shooter m_shooter;
+    Talon m_loaderMotor;
+    DigitalInput m_limitSwitch;
+    Loader m_loader;
+    Attachment m_attachment;
 	AxisCamera camera;
 	Targeting targeting;
 
 
 public:
 	Robot() :
-		driveTrain(),
-		stick(Port::joystickChannel),
+		// these must be initialized in the same order
+	  // as they are declared above.
+      m_driveTrain(),
+      m_stick(Port::joystickChannel),
+      m_gamepad(Port::gamepadChannel),
+      m_controller(&m_stick, &m_gamepad),
+      m_shooterEncoder(Port::firstEncoderChannel, Port::secondEncoderChannel),
+      m_magazineMotor(Port::magazineChannel),
+      m_flywheelMotor(Port::flywheelChannel),
+      m_shooter(&m_shooterEncoder, &m_magazineMotor, &m_flywheelMotor, &m_controller),
+      m_loaderMotor(Port::loaderChannel),
+      m_limitSwitch(Port::digitalInputChannel),
+      m_loader(&m_loaderMotor, &m_controller, &m_limitSwitch),
+      m_attachment(&m_shooter, &m_loader),
 		camera(cameraIP),
 		targeting()
 {
-		driveTrain.SetExpiration(0.1);
-		// invert the left side motors
-		driveTrain.SetInvertedMotor(RobotDrive::kFrontLeftMotor, true);
-		// you may need to change or remove this to match your robot
-		driveTrain.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);
+		 m_driveTrain.SetInvertedMotor(RobotDrive::MotorType::kFrontLeftMotor, true);
+	   m_driveTrain.SetInvertedMotor(RobotDrive::MotorType::kRearLeftMotor, true);
 		camera.WriteResolution(camera.kResolution_320x240);
 		targeting.setupCamera(&camera);
 		targeting.setupCameraServer(CameraServer::GetInstance());
@@ -43,16 +64,19 @@ public:
 	 */
 	void OperatorControl()
 	{
-		driveTrain.SetSafetyEnabled(false);
+		m_driveTrain.SetSafetyEnabled(false);
 		std::thread targetingThreadInstance(targetingThread, this, &targeting);
 		while (IsOperatorControl() && IsEnabled())
 		{
-			// Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
-			// This sample does not use field-oriented drive, so the gyro input is set to zero.
-			driveTrain.MecanumDrive_Cartesian(stick.GetX(), stick.GetY(), stick.GetZ());
-
-			// wait 5ms to avoid hogging CPU cycles
-			Wait(0.005);
+			/*
+         Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
+         */
+    	 //printf("X:%2.2f  Y:%2.2f  Z:%2.2f\n", m_controller.GetStickX(), m_controller.GetStickY(), m_controller.GetStickZ());
+         printf("T:%2.2f\n", m_controller.GetStickThrottle());
+         m_driveTrain.MecanumDrive_Cartesian(m_controller.GetStickX(), m_controller.GetStickY(), m_controller.GetStickZ());
+         // wait 5ms to avoid hogging CPU cycles
+         m_attachment.checkAllButtons();
+         Wait(0.005);
 		}
 		targetingThreadInstance.join();
 	}
