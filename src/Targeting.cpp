@@ -6,7 +6,7 @@
 Targeting::Targeting()
 {
 	m_sourceFrame = new ColorImage(IMAQ_IMAGE_RGB);
-	m_filteredFrame = new BinaryImage();
+	m_filteredFrame = 0;
 }
 
 void Targeting::setupCamera(AxisCamera* camera){
@@ -38,17 +38,19 @@ BinaryImage* Targeting::filterImage(ColorImage* inputImage)
 
 void Targeting::runTargeting()
 {
-		return;
+		printf("Targeting top\n");
         //Update the source and filter the image each frame
         updateSource();
 
+        if(m_filteredFrame){
+        	delete m_filteredFrame;
+        }
         m_filteredFrame = filterImage(m_sourceFrame);
-        //m_filteredFrame = m_filteredFrame->RemoveSmallObjects(true, 1);
         ColorImage* output = new ColorImage(IMAQ_IMAGE_U8);
         float gv = 255;
         PixelValue pv;
         pv.grayscale = gv;
-
+#ifdef LATER
         imaqMultiplyConstant(output->GetImaqImage(), m_filteredFrame->GetImaqImage(), pv);
 
         Rect rectangle = m_filteredFrame->GetOrderedParticleAnalysisReports()[0][0].boundingRect;
@@ -72,8 +74,11 @@ void Targeting::runTargeting()
         }
         SmartDashboard::PutString("DB/String 0", out);
 
-        delete m_filteredFrame;
+#endif
+
         delete output;
+
+        printf("Targeting Bottom\n");
 
         Wait(0.005);
 }
