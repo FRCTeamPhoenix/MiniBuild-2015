@@ -20,7 +20,6 @@ private:
 
    void startLoader();
    void stopLoader();
-   int counter;
 
 public:
 	Loader(
