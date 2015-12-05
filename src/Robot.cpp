@@ -11,7 +11,7 @@ class Robot: public SampleRobot
 	DriveTrain driveTrain;
 	// only joystick
 	Joystick stick;
-	AxisCamera *camera;
+	AxisCamera camera;
 	Targeting targeting;
 
 
@@ -19,6 +19,7 @@ public:
 	Robot() :
 		driveTrain(),
 		stick(Port::joystickChannel),
+		camera(cameraIP),
 		targeting()
 {
 		driveTrain.SetExpiration(0.1);
@@ -26,9 +27,8 @@ public:
 		driveTrain.SetInvertedMotor(RobotDrive::kFrontLeftMotor, true);
 		// you may need to change or remove this to match your robot
 		driveTrain.SetInvertedMotor(RobotDrive::kRearLeftMotor, true);
-		camera = new AxisCamera(cameraIP);
-		camera->WriteResolution(camera->kResolution_320x240);
-		targeting.setupCamera(camera);
+		camera.WriteResolution(camera.kResolution_320x240);
+		targeting.setupCamera(&camera);
 		targeting.setupCameraServer(CameraServer::GetInstance());
 		SmartDashboard::init();
 }
