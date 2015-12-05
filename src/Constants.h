@@ -87,6 +87,6 @@ struct CameraRes{
    const static uint32_t y                  = 240;
 };
 
-static std::string cameraIP = "10.0.42.20";
+static std::string cameraIP = "10.23.42.21";
 
 #endif /* SRC_CONSTANTS_H_ */
