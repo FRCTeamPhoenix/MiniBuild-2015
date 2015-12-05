@@ -7,7 +7,6 @@ Targeting::Targeting()
 {
 	m_sourceFrame = new ColorImage(IMAQ_IMAGE_RGB);
 	m_filteredFrame = new BinaryImage();
-	m_camera = new AxisCamera(0);
 }
 
 void Targeting::setupCamera(AxisCamera* camera){
@@ -63,12 +62,12 @@ void Targeting::runTargeting()
 
         m_cameraServer->SetImage(output->GetImaqImage());
 
-        std::string out = "";
+        std::string out = "Target ";
         if(targetSighted()){
-        	out += "Target Sighted";
+        	out += "Sighted";
         }
         else {
-        	out += "Target NOT Sighted";
+        	out += "NOT Sighted";
         }
         SmartDashboard::PutString("DB/String 0", out);
 
